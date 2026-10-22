@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -5,9 +6,13 @@ using UnityEngine.Rendering;
 public class moveplayer : MonoBehaviour
 {
     private Vector2 moveInput;
+    private PlayerEnergy energia;
 
     [Header("Movement")]
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float slow = 3f;
+    [SerializeField] private float rotationSpeed = 10f;
+
     public Camera camara;
     private bool quieto = false;
 
@@ -18,15 +23,65 @@ public class moveplayer : MonoBehaviour
     private GrabObject grabObject;
 
     private Rigidbody rb;
+    public Animator animator;
+    private bool slowapply=false;
 
     public void Awake()
     {
+        
+        energia = GetComponent<PlayerEnergy>();
         rb = GetComponent<Rigidbody>();
     }
     private void OnMove(InputValue context)
     {
-
+        if (quieto) return;
         moveInput = context.Get<Vector2>();
+
+        if (moveInput != Vector2.zero)
+        {
+            if (energia != null && energia.PuedeTrabajar())
+            {
+                energia.SetTrabajando(true);
+            }
+            if(!energia.PuedeTrabajar() && !slowapply)
+            {
+                animator.SetBool("walk", true);
+                animator.SetBool("run", false);
+                slowapply = true;
+                speed -=slow;
+            }
+            if (speed > slow)
+            {
+                animator.SetBool("run", true);
+            }
+            else
+            {
+                animator.SetBool("walk", true);
+            }
+        }
+        else
+        {
+            animator.SetBool("walk", false);
+            animator.SetBool("run", false);
+            energia.SetTrabajando(false);
+        }
+
+       
+    }
+    private void OnEat(InputValue context)
+    {
+        Collider[] objetosCercanos = Physics.OverlapSphere(
+                transform.position,
+                radioInteraccion,
+                capaAgarre
+            );
+        foreach (var objeto in objetosCercanos)
+        {
+            if (objeto.TryGetComponent(out Eatobject comidaencontrada))
+            {
+                energia.RecuperarEnergia(comidaencontrada.comer());
+            }
+        }
     }
     private void OnInteract(InputValue context)
     {
@@ -59,7 +114,6 @@ public class moveplayer : MonoBehaviour
     {
         if (quieto) return;
 
-
         // Dirección horizontal de la cámara.
         Vector3 direccionAdelante = camara.transform.forward;
         Vector3 direccionDerecha = camara.transform.right;
@@ -74,6 +128,20 @@ public class moveplayer : MonoBehaviour
         Vector3 movimiento =
             direccionDerecha * moveInput.x +
             direccionAdelante * moveInput.y;
+
+        movimiento = Vector3.ClampMagnitude(movimiento, 1f);
+
+        // Rotación hacia la dirección del movimiento.
+        if (movimiento.sqrMagnitude > 0.01f)
+        {
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(movimiento);
+
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                rotacionObjetivo,
+                rotationSpeed * Time.fixedDeltaTime
+            );
+        }
 
         movimiento = Vector3.ClampMagnitude(movimiento, 1f);
 
@@ -97,5 +165,11 @@ public class moveplayer : MonoBehaviour
         quieto = false;
         moveInput = Vector2.zero;
     }
-
+    public void recuperarVelocidad()
+    {
+        animator.SetBool("walk", false);
+        animator.SetBool("run", true);
+        slowapply = false;
+        speed += slow;
+    }
 }
