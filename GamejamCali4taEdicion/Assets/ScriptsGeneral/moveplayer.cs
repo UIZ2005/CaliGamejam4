@@ -11,6 +11,12 @@ public class moveplayer : MonoBehaviour
     public Camera camara;
     private bool quieto = false;
 
+    [Header("Agarre")]
+    public Transform puntoAgarrePoder;
+    public float radioInteraccion = 2f;
+    public LayerMask capaAgarre;
+    private GrabObject grabObject;
+
     private Rigidbody rb;
 
     public void Awake()
@@ -21,6 +27,32 @@ public class moveplayer : MonoBehaviour
     {
 
         moveInput = context.Get<Vector2>();
+    }
+    private void OnInteract(InputValue context)
+    {
+        if (!context.isPressed) return;
+        if (grabObject != null)
+        {
+            grabObject.Interact();
+            grabObject = null;
+            return;
+        }
+
+            Collider[] objetosCercanos = Physics.OverlapSphere(
+                transform.position,
+                radioInteraccion,
+                capaAgarre
+            );
+        foreach (var objeto in objetosCercanos)
+        {
+            if (objeto.TryGetComponent(out GrabObject grabEncontrado))
+            {
+                grabObject = grabEncontrado;
+                grabObject.puntoAgarre = puntoAgarrePoder;
+                grabObject.Interact();
+                return;
+            }
+        }
     }
 
     private void FixedUpdate()
