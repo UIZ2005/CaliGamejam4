@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/4_suarez/3D Main Menu.unity
+    guid: 992d580c530186043a136c6b884adbfd
+  - enabled: 1
+    path: Assets/4_suarez/MenuDeCarga.unity
+    guid: b46efaad3bb53114f823932b460cd98e
+  - enabled: 1
+    path: Assets/2_isa/Cocina.unity
+    guid: 9a64ecc46f6d06848bdf374114bb0c62
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c4ce264871e68154797f5b9e367c7b09, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: ffdc5c1ad28241a4daf0fa965fce2d80, type: 3}
