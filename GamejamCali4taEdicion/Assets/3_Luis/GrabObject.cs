@@ -16,6 +16,9 @@ public class GrabObject : MonoBehaviour
     private Rigidbody objetoAgarrado;
     private Transform padreOriginal;
     private bool kinematicOriginal;
+    
+    // Variable para guardar la escala y evitar que se deforme
+    private Vector3 escalaOriginal;
 
     public void Interact()
     {
@@ -72,6 +75,9 @@ public class GrabObject : MonoBehaviour
         objetoAgarrado.isKinematic = true;
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
         
+        // GUARDAMOS LA ESCALA ORIGINAL ANTES DE EMPARENTAR
+        escalaOriginal = objetoAgarrado.transform.localScale;
+        
         objetoAgarrado.transform.SetParent(puntoAgarre);
         
         // Se aplican los valores personalizados en lugar de dejarlo en (0,0,0)
@@ -82,6 +88,10 @@ public class GrabObject : MonoBehaviour
     private void SoltarObjeto()
     {
         objetoAgarrado.transform.SetParent(padreOriginal);
+        
+        // RESTAURAMOS LA ESCALA ORIGINAL AL SOLTARLO
+        objetoAgarrado.transform.localScale = escalaOriginal;
+        
         gameObject.GetComponent<BoxCollider>().isTrigger = false;
         objetoAgarrado.isKinematic = kinematicOriginal;
         objetoAgarrado.linearVelocity = Vector3.zero;
