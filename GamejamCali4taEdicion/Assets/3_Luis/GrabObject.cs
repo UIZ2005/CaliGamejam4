@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class GrabObject : MonoBehaviour
@@ -7,6 +6,12 @@ public class GrabObject : MonoBehaviour
     public Transform puntoAgarre;
     [SerializeField] private float radioInteraccion = 2f;
     [SerializeField] private LayerMask capaObjetos;
+
+    [Header("Ajustes de Posición y Rotación")]
+    [Tooltip("Ajusta la distancia/posición en la que se sostiene este objeto")]
+    public Vector3 offsetPosicion = Vector3.zero;
+    [Tooltip("Ajusta el ángulo/rotación en el que se sostiene este objeto")]
+    public Vector3 offsetRotacion = Vector3.zero;
 
     private Rigidbody objetoAgarrado;
     private Transform padreOriginal;
@@ -66,9 +71,12 @@ public class GrabObject : MonoBehaviour
         objetoAgarrado.angularVelocity = Vector3.zero;
         objetoAgarrado.isKinematic = true;
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        
         objetoAgarrado.transform.SetParent(puntoAgarre);
-        objetoAgarrado.transform.localPosition = Vector3.zero;
-        objetoAgarrado.transform.localRotation = Quaternion.identity;
+        
+        // Se aplican los valores personalizados en lugar de dejarlo en (0,0,0)
+        objetoAgarrado.transform.localPosition = offsetPosicion;
+        objetoAgarrado.transform.localEulerAngles = offsetRotacion;
     }
 
     private void SoltarObjeto()
