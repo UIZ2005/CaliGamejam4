@@ -25,10 +25,11 @@ public class moveplayer : MonoBehaviour
     private Rigidbody rb;
     public Animator animator;
     private bool slowapply=false;
+    private audioManager audio;
 
     public void Awake()
     {
-        
+        audio = FindAnyObjectByType<audioManager>();
         energia = GetComponent<PlayerEnergy>();
         rb = GetComponent<Rigidbody>();
     }
@@ -39,6 +40,9 @@ public class moveplayer : MonoBehaviour
 
         if (moveInput != Vector2.zero)
         {
+            if (audio != null)
+                audio.seleccionAudio(0);
+
             if (energia != null && energia.PuedeTrabajar())
             {
                 energia.SetTrabajando(true);
@@ -68,6 +72,24 @@ public class moveplayer : MonoBehaviour
 
        
     }
+
+    private bool EstaAlFrente(Collider objeto)
+    {
+        Vector3 direccion = objeto.bounds.center - transform.position;
+
+        // Ignorar diferencias de altura.
+        direccion.y = 0f;
+
+        if (direccion.sqrMagnitude < 0.001f)
+            return true;
+
+        direccion.Normalize();
+
+        // Solo aceptar objetos dentro de los 180 grados frontales.
+        return Vector3.Dot(transform.forward, direccion) > 0f;
+    }
+
+
     private void OnEat(InputValue context)
     {
         Collider[] objetosCercanos = Physics.OverlapSphere(
@@ -77,6 +99,9 @@ public class moveplayer : MonoBehaviour
             );
         foreach (var objeto in objetosCercanos)
         {
+            if (!EstaAlFrente(objeto))
+                continue;
+
             if (objeto.TryGetComponent(out Eatobject comidaencontrada))
             {
                 energia.RecuperarEnergia(comidaencontrada.comer());
@@ -100,6 +125,9 @@ public class moveplayer : MonoBehaviour
             );
         foreach (var objeto in objetosCercanos)
         {
+            if (!EstaAlFrente(objeto))
+                continue;
+
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
                 grabObject = grabEncontrado;
