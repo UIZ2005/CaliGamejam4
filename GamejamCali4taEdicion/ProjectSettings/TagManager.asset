@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Fluid
+  - "CanvasNoVi\xF1eta"
   layers:
   - Default
   - TransparentFX
