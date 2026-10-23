@@ -106,4 +106,66 @@ public class GrabObject : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radioInteraccion);
     }
+
+    //parte para lo de la cocina ---------------------------------------------
+    private bool kinematicInicial;
+
+    private void Awake()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null) kinematicInicial = rb.isKinematic;
+    }
+
+    // Si este objeto está en la mano de alguien
+    public bool EstaAgarrado => objetoAgarrado != null;
+
+    public void AgarrarDirecto(Transform punto)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        Collider col = GetComponent<Collider>();
+
+        puntoAgarre = punto;
+        objetoAgarrado = rb;
+        padreOriginal = null;              // al soltarlo al piso no vuelve a la mesa
+        kinematicOriginal = kinematicInicial;
+        escalaOriginal = transform.localScale;
+
+        if (!rb.isKinematic)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+        rb.isKinematic = true;
+
+        if (col != null)
+        {
+            col.enabled = true;
+            col.isTrigger = true;
+        }
+
+        transform.SetParent(punto);
+        transform.localPosition = offsetPosicion;
+        transform.localEulerAngles = offsetRotacion;
+    }
+
+    // Acomoda eel objeto en u lugar especifico par auq eno quede mal acomodado
+    
+    public void ColocarEn(Transform slot)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        Collider col = GetComponent<Collider>();
+
+        Vector3 escala = objetoAgarrado != null ? escalaOriginal : transform.localScale;
+
+        objetoAgarrado = null;
+        padreOriginal = null;
+
+        rb.isKinematic = true;
+        if (col != null) col.enabled = false;
+
+        transform.SetParent(slot);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+        transform.localScale = escala;     // que no se deforme
+    }
 }

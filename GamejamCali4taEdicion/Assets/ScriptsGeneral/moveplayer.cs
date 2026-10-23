@@ -27,6 +27,11 @@ public class moveplayer : MonoBehaviour
     private bool slowapply=false;
     private audioManager audio;
 
+    // COCINA
+    public LayerMask capaEstaciones;
+    public float distanciaFrente = 0.8f;
+    public float radioEstaciones = 1f;
+
     public void Awake()
     {
         audio = FindAnyObjectByType<audioManager>();
@@ -112,9 +117,22 @@ public class moveplayer : MonoBehaviour
     {
         if (!context.isPressed) return;
 
+        // hay una estación de cocina al frente?
+        Vector3 puntoCocina = transform.position + transform.forward * distanciaFrente;
+        Estacion estacion = BuscarEstacionCocina(puntoCocina);
+
         // 1. Si ya tiene un objeto en la mano, lo suelta y termina.
         if (grabObject != null)
         {
+            //  si es algo de cocina y hay estación al frente, la estación lo recibe
+            if (estacion != null && grabObject.TryGetComponent(out ItemCocina itemEnMano))
+            {
+                ResultadoEstacion r = estacion.Recibir(itemEnMano, puntoCocina);
+                if (r == ResultadoEstacion.ObjetoRecibido)
+                    grabObject = null;
+                return; 
+            }
+
             grabObject.Interact();
             grabObject = null;
             return;
@@ -126,7 +144,7 @@ public class moveplayer : MonoBehaviour
             radioInteraccion,
             capaAgarre
         );
-        
+
         // --- PRIORIDAD 1: Buscar objetos sueltos en el piso primero ---
         foreach (var objeto in objetosCercanos)
         {
@@ -139,6 +157,18 @@ public class moveplayer : MonoBehaviour
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
                 return; // Se detiene aquí porque ya recogió el objeto del piso
+            }
+        }
+
+        // --- COCINA: la estación de cocina al frente entrega algo ---
+        if (estacion != null)
+        {
+            ItemCocina dado = estacion.Entregar(puntoCocina);
+            if (dado != null)
+            {
+                grabObject = dado.Grab;
+                grabObject.AgarrarDirecto(puntoAgarrePoder);
+                return;
             }
         }
 
@@ -156,12 +186,37 @@ public class moveplayer : MonoBehaviour
                 {
                     grabObject = nuevoGrab;
                     grabObject.puntoAgarre = puntoAgarrePoder;
-                    grabObject.Interact(); 
+                    grabObject.Interact();
                 }
                 return; // Se detiene aquí tras crear un objeto nuevo
             }
         }
     }
+
+
+    // estacion de cocinas para identificar si esta frente a una
+    private Estacion BuscarEstacionCocina(Vector3 punto)
+    {
+        Collider[] cols = Physics.OverlapSphere(punto, radioEstaciones, capaEstaciones, QueryTriggerInteraction.Collide);
+
+        Estacion mejor = null;
+        float min = float.MaxValue;
+
+        foreach (var c in cols)
+        {
+            Estacion e = c.GetComponentInParent<Estacion>();
+            if (e == null) continue;
+
+            float d = (c.ClosestPoint(punto) - punto).sqrMagnitude;
+            if (d < min)
+            {
+                min = d;
+                mejor = e;
+            }
+        }
+        return mejor;
+    }
+
 
     private void FixedUpdate()
     {
@@ -224,5 +279,12 @@ public class moveplayer : MonoBehaviour
         animator.SetBool("run", true);
         slowapply = false;
         speed += slow;
+    }
+
+    // COCINA: ver en la escena dónde busca estaciones
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position + transform.forward * distanciaFrente, radioEstaciones);
     }
 }
