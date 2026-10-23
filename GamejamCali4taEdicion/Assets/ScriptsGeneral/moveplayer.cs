@@ -111,6 +111,8 @@ public class moveplayer : MonoBehaviour
     private void OnInteract(InputValue context)
     {
         if (!context.isPressed) return;
+
+        // 1. Si ya tiene un objeto en la mano, lo suelta y termina. (Cumple tu regla de no instanciar si ya tiene algo).
         if (grabObject != null)
         {
             grabObject.Interact();
@@ -118,22 +120,42 @@ public class moveplayer : MonoBehaviour
             return;
         }
 
-            Collider[] objetosCercanos = Physics.OverlapSphere(
-                transform.position,
-                radioInteraccion,
-                capaAgarre
-            );
+        // 2. Si NO tiene nada en la mano, busca objetos o zonas alrededor.
+        Collider[] objetosCercanos = Physics.OverlapSphere(
+            transform.position,
+            radioInteraccion,
+            capaAgarre
+        );
+        
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
                 continue;
 
+            // CASO A: Es un objeto normal que ya existe tirado en el piso (Ladrillo/Cemento suelto)
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
                 grabObject = grabEncontrado;
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
-                return;
+                return; // Terminamos aquÃ­
+            }
+
+            // CASO B: Es la ZONA DE INSTANCIACIÃ“N (Caja de materiales infinita)
+            if (objeto.TryGetComponent(out ZonaInstanciador zona))
+            {
+                // Instanciamos el prefab exactamente en la mano del jugador
+                GameObject nuevoObjeto = zona.InstanciarObjeto(puntoAgarrePoder.position);
+
+                // Como el objeto instanciado tiene el script GrabObject, lo agarramos automÃ¡ticamente
+                if (nuevoObjeto.TryGetComponent(out GrabObject nuevoGrab))
+                {
+                    grabObject = nuevoGrab;
+                    grabObject.puntoAgarre = puntoAgarrePoder;
+                    // Llama al interact del objeto nuevo para que se emparentÃ© y se configure
+                    grabObject.Interact(); 
+                }
+                return; // Terminamos aquÃ­
             }
         }
     }
@@ -142,7 +164,7 @@ public class moveplayer : MonoBehaviour
     {
         if (quieto) return;
 
-        // Dirección horizontal de la cámara.
+        // Direcciï¿½n horizontal de la cï¿½mara.
         Vector3 direccionAdelante = camara.transform.forward;
         Vector3 direccionDerecha = camara.transform.right;
 
@@ -152,14 +174,14 @@ public class moveplayer : MonoBehaviour
         direccionAdelante.Normalize();
         direccionDerecha.Normalize();
 
-        // Movimiento relativo a la cámara.
+        // Movimiento relativo a la cï¿½mara.
         Vector3 movimiento =
             direccionDerecha * moveInput.x +
             direccionAdelante * moveInput.y;
 
         movimiento = Vector3.ClampMagnitude(movimiento, 1f);
 
-        // Rotación hacia la dirección del movimiento.
+        // Rotaciï¿½n hacia la direcciï¿½n del movimiento.
         if (movimiento.sqrMagnitude > 0.01f)
         {
             Quaternion rotacionObjetivo = Quaternion.LookRotation(movimiento);
