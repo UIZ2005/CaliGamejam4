@@ -112,7 +112,7 @@ public class moveplayer : MonoBehaviour
     {
         if (!context.isPressed) return;
 
-        // 1. Si ya tiene un objeto en la mano, lo suelta y termina. (Cumple tu regla de no instanciar si ya tiene algo).
+        // 1. Si ya tiene un objeto en la mano, lo suelta y termina.
         if (grabObject != null)
         {
             grabObject.Interact();
@@ -120,42 +120,45 @@ public class moveplayer : MonoBehaviour
             return;
         }
 
-        // 2. Si NO tiene nada en la mano, busca objetos o zonas alrededor.
+        // 2. Busca objetos o zonas alrededor.
         Collider[] objetosCercanos = Physics.OverlapSphere(
             transform.position,
             radioInteraccion,
             capaAgarre
         );
         
+        // --- PRIORIDAD 1: Buscar objetos sueltos en el piso primero ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
                 continue;
 
-            // CASO A: Es un objeto normal que ya existe tirado en el piso (Ladrillo/Cemento suelto)
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
                 grabObject = grabEncontrado;
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
-                return; // Terminamos aquí
+                return; // Se detiene aquí porque ya recogió el objeto del piso
             }
+        }
 
-            // CASO B: Es la ZONA DE INSTANCIACIÓN (Caja de materiales infinita)
+        // --- PRIORIDAD 2: Si no había objetos sueltos, busca la zona para instanciar ---
+        foreach (var objeto in objetosCercanos)
+        {
+            if (!EstaAlFrente(objeto))
+                continue;
+
             if (objeto.TryGetComponent(out ZonaInstanciador zona))
             {
-                // Instanciamos el prefab exactamente en la mano del jugador
                 GameObject nuevoObjeto = zona.InstanciarObjeto(puntoAgarrePoder.position);
 
-                // Como el objeto instanciado tiene el script GrabObject, lo agarramos automáticamente
                 if (nuevoObjeto.TryGetComponent(out GrabObject nuevoGrab))
                 {
                     grabObject = nuevoGrab;
                     grabObject.puntoAgarre = puntoAgarrePoder;
-                    // Llama al interact del objeto nuevo para que se emparenté y se configure
                     grabObject.Interact(); 
                 }
-                return; // Terminamos aquí
+                return; // Se detiene aquí tras crear un objeto nuevo
             }
         }
     }
