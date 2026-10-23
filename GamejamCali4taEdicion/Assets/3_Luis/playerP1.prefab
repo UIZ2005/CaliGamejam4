@@ -571,7 +571,7 @@ MonoBehaviour:
   rotationSpeed: 10
   camara: {fileID: 0}
   puntoAgarrePoder: {fileID: 1098421777232494323}
-  radioInteraccion: 1.5
+  radioInteraccion: 1.2
   capaAgarre:
     serializedVersion: 2
     m_Bits: 64
