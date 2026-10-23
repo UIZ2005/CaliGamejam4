@@ -35,9 +35,9 @@ public class NivelManager : MonoBehaviour
 
     [Header("Paneles")]
      public GameObject panelInicioNivel;
-    public TMP_Text textoTituloNivel;
+    public Text textoTituloNivel;
     public GameObject panelGameOver;
-    public TMP_Text textoMotivoGameOver;
+    public Text textoMotivoGameOver;
     public GameObject panelVictoria;
 
     private int indice;              
