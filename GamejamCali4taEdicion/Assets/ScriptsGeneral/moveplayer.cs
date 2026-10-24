@@ -81,16 +81,12 @@ public class moveplayer : MonoBehaviour
     private bool EstaAlFrente(Collider objeto)
     {
         Vector3 direccion = objeto.bounds.center - transform.position;
-
-        // Ignorar diferencias de altura.
         direccion.y = 0f;
 
         if (direccion.sqrMagnitude < 0.001f)
             return true;
 
         direccion.Normalize();
-
-        // Solo aceptar objetos dentro de los 180 grados frontales.
         return Vector3.Dot(transform.forward, direccion) > 0f;
     }
 
@@ -117,14 +113,11 @@ public class moveplayer : MonoBehaviour
     {
         if (!context.isPressed) return;
 
-        // hay una estación de cocina al frente?
         Vector3 puntoCocina = transform.position + transform.forward * distanciaFrente;
         Estacion estacion = BuscarEstacionCocina(puntoCocina);
 
-        // 1. Si ya tiene un objeto en la mano, lo suelta y termina.
         if (grabObject != null)
         {
-            //  si es algo de cocina y hay estación al frente, la estación lo recibe
             if (estacion != null && grabObject.TryGetComponent(out ItemCocina itemEnMano))
             {
                 ResultadoEstacion r = estacion.Recibir(itemEnMano, puntoCocina);
@@ -138,14 +131,13 @@ public class moveplayer : MonoBehaviour
             return;
         }
 
-        // 2. Busca objetos o zonas alrededor.
         Collider[] objetosCercanos = Physics.OverlapSphere(
             transform.position,
             radioInteraccion,
             capaAgarre
         );
 
-        // --- PRIORIDAD 1: Buscar objetos sueltos en el piso primero ---
+        // --- PRIORIDAD 1: Buscar objetos sueltos en el piso ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
@@ -156,11 +148,11 @@ public class moveplayer : MonoBehaviour
                 grabObject = grabEncontrado;
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
-                return; // Se detiene aquí porque ya recogió el objeto del piso
+                return; 
             }
         }
 
-        // --- COCINA: la estación de cocina al frente entrega algo ---
+        // --- COCINA ---
         if (estacion != null)
         {
             ItemCocina dado = estacion.Entregar(puntoCocina);
@@ -172,7 +164,7 @@ public class moveplayer : MonoBehaviour
             }
         }
 
-        // --- PRIORIDAD 2: Si no había objetos sueltos, busca la zona para instanciar ---
+        // --- PRIORIDAD 2: Zonas de instanciación ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
@@ -188,13 +180,27 @@ public class moveplayer : MonoBehaviour
                     grabObject.puntoAgarre = puntoAgarrePoder;
                     grabObject.Interact();
                 }
-                return; // Se detiene aquí tras crear un objeto nuevo
+                return; 
+            }
+        }
+
+        // --- PRIORIDAD 3: Mesa de Madera ---
+        foreach (var objeto in objetosCercanos)
+        {
+            if (!EstaAlFrente(objeto))
+                continue;
+
+            if (objeto.TryGetComponent(out MesaMadera mesa))
+            {
+                if (!TieneObjetoAgarrado())
+                {
+                    mesa.IniciarCorte(this);
+                }
+                return; 
             }
         }
     }
 
-
-    // estacion de cocinas para identificar si esta frente a una
     private Estacion BuscarEstacionCocina(Vector3 punto)
     {
         Collider[] cols = Physics.OverlapSphere(punto, radioEstaciones, capaEstaciones, QueryTriggerInteraction.Collide);
@@ -222,7 +228,6 @@ public class moveplayer : MonoBehaviour
     {
         if (quieto) return;
 
-        // Direcci�n horizontal de la c�mara.
         Vector3 direccionAdelante = camara.transform.forward;
         Vector3 direccionDerecha = camara.transform.right;
 
@@ -232,14 +237,12 @@ public class moveplayer : MonoBehaviour
         direccionAdelante.Normalize();
         direccionDerecha.Normalize();
 
-        // Movimiento relativo a la c�mara.
         Vector3 movimiento =
             direccionDerecha * moveInput.x +
             direccionAdelante * moveInput.y;
 
         movimiento = Vector3.ClampMagnitude(movimiento, 1f);
 
-        // Rotaci�n hacia la direcci�n del movimiento.
         if (movimiento.sqrMagnitude > 0.01f)
         {
             Quaternion rotacionObjetivo = Quaternion.LookRotation(movimiento);
@@ -253,13 +256,11 @@ public class moveplayer : MonoBehaviour
 
         movimiento = Vector3.ClampMagnitude(movimiento, 1f);
 
-        // Mantener la velocidad horizontal del jugador.
         Vector3 velocidad = rb.linearVelocity;
         velocidad.x = movimiento.x * speed;
         velocidad.z = movimiento.z * speed;
 
         rb.linearVelocity = velocidad;
-
     }
     public void activarquieto()
     {
@@ -281,10 +282,27 @@ public class moveplayer : MonoBehaviour
         speed += slow;
     }
 
-    // COCINA: ver en la escena dónde busca estaciones
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position + transform.forward * distanciaFrente, radioEstaciones);
+    }
+
+    // --- FUNCIONES NUEVAS PARA LA MESA DE MADERA ---
+    public bool TieneObjetoAgarrado()
+    {
+        return grabObject != null;
+    }
+
+    public void ForzarAgarre(GrabObject nuevoGrab)
+    {
+        if (grabObject != null)
+        {
+            grabObject.Interact(); // Suelta si por error tenía algo
+        }
+        
+        grabObject = nuevoGrab;
+        grabObject.puntoAgarre = puntoAgarrePoder;
+        grabObject.Interact();
     }
 }
