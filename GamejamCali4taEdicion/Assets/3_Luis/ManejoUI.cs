@@ -9,8 +9,13 @@ public class ManejoUI : MonoBehaviour
     public GameObject[] skinsPanels;
     private int actindex=0;
     private bool gamestart=false;
+    private Diaologo[] dialogos;
+    private FlujoTutorial flujo;
+    public bool dialogoActivo=true;
     void Start()
     {
+        dialogos = flujo.Dialogos;
+        flujo = FindAnyObjectByType<FlujoTutorial>();
         gameObject.GetComponent<moveplayer>().activarquieto();
     }
     private void OnMove(InputValue context)
@@ -19,6 +24,13 @@ public class ManejoUI : MonoBehaviour
         interaccion = context.Get<Vector2>();
         cambiarPersonaje(interaccion.x);
          }
+    }
+    private void OnInteract(InputValue context)
+    {
+        if (gamestart && dialogoActivo)
+        {
+            dialogos[flujo.DiaReprod].interact();
+        }
     }
 
     public void cambiarPersonaje(float x)
@@ -52,13 +64,10 @@ public class ManejoUI : MonoBehaviour
     }
     public void Empezarjuego()
     {
+        dialogos[0].interact();
         gamestart = true;
         gameObject.GetComponent<moveplayer>().enabled=true;
-        gameObject.GetComponent<moveplayer>().desactivarquieto();
-
         skins[actindex].SetActive(true);
         gameObject.GetComponent<moveplayer>().animator = skins[actindex].GetComponent<Animator>();
-
-        gameObject.GetComponent<ManejoUI>().enabled=false;
     }
 }
