@@ -6601,7 +6601,7 @@ MonoBehaviour:
     duracionSegundos: 180
     metaComidas: 8
     objetosDelNivel: []
-  nivelInicial: 2
+  nivelInicial: 3
   terminarAlCumplirMetas: 0
   textoTiempo: {fileID: 845273849}
   textoComidas: {fileID: 27644126}
