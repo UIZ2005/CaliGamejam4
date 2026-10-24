@@ -116,6 +116,13 @@ public class ItemCocina : MonoBehaviour
     {
         if (EsPlato)
         {
+            // CORRECCIÓN: plato hondo lleno en la olla -> entrega lo que tiene (Sancocho)
+            if (lleno)
+            {
+                servido = llenoCon;
+                return true;
+            }
+
             if (Comida != null && Comida.Estado == EstadoCoccion.Listo)
             {
                 servido = Comida.tipo;
