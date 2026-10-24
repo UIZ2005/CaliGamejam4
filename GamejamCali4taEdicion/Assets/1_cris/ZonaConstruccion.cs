@@ -10,28 +10,23 @@ public class RecetaConstruccion
     public int reqLadrillos;
     public int reqCemento;
     public int reqMadera;
-    public int reqAgua; // Nuevo requerimiento añadido
+    public int reqAgua; 
 }
 
 [RequireComponent(typeof(BoxCollider))]
 public class ZonaConstruccion : MonoBehaviour
 {
     [Header("Configuración de Nivel")]
-    [Tooltip("Añade aquí las recetas en orden (Fase 1, Fase 2, etc.)")]
     public List<RecetaConstruccion> listaRecetas;
     
     [Header("Modelos 3D de la Construcción")]
-    [Tooltip("El modelo que aparece al completar las primeras 2 recetas")]
     public GameObject modeloFaseMedia;
-    [Tooltip("El modelo final que aparece al completar todas las recetas")]
     public GameObject modeloFaseFinal;
 
     [Header("Interfaz UI")]
     public Text textoRecetaUI;
 
     private int indiceRecetaActual = 0;
-
-    // Contadores internos
     private int faltaConcreto;
     private int faltaLadrillos;
     private int faltaCemento;
@@ -42,7 +37,6 @@ public class ZonaConstruccion : MonoBehaviour
     {
         GetComponent<BoxCollider>().isTrigger = true;
         
-        // Nos aseguramos de apagar los modelos al iniciar el nivel
         if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
         if (modeloFaseFinal != null) modeloFaseFinal.SetActive(false);
 
@@ -51,26 +45,26 @@ public class ZonaConstruccion : MonoBehaviour
 
     void CargarReceta(int indice)
     {
-        // LÓGICA DE APARICIÓN DE MODELOS 3D
-        // Si llegamos al índice 2 (es decir, ya se completaron la 0 y la 1)
         if (indice == 2)
         {
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(true);
         }
 
-        // Si ya completamos todas las recetas
         if (indice >= listaRecetas.Count)
         {
-            // Apagamos la fase media y encendemos la casa terminada
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
             if (modeloFaseFinal != null) modeloFaseFinal.SetActive(true);
 
             indiceRecetaActual = indice;
             textoRecetaUI.text = "¡CONSTRUCCIÓN COMPLETADA!";
+            
+            // Avisa al NivelManager que la construcción terminó
+            if (NivelManager.Instancia != null)
+                NivelManager.Instancia.RegistrarConstruccionCompletada();
+                
             return;
         }
 
-        // Cargar datos de la nueva receta
         indiceRecetaActual = indice;
         faltaConcreto = listaRecetas[indice].reqConcreto;
         faltaLadrillos = listaRecetas[indice].reqLadrillos;
@@ -83,12 +77,10 @@ public class ZonaConstruccion : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        // Ignorar si lo tiene en la mano o ya acabo el nivel
         if (other.isTrigger || indiceRecetaActual >= listaRecetas.Count) return;
 
         bool recibioMaterial = false;
 
-        // 1. Validar Agua (Vaciamos la cubeta, NO se destruye el objeto)
         if (faltaAgua > 0 && other.TryGetComponent(out CubetaAgua cubeta))
         {
             if (cubeta.estaLlena)
@@ -98,28 +90,24 @@ public class ZonaConstruccion : MonoBehaviour
                 recibioMaterial = true;
             }
         }
-        // 2. Validar Concreto (Este sí se destruye)
         else if (faltaConcreto > 0 && other.TryGetComponent(out ItemConcreto concreto))
         {
             Destroy(concreto.gameObject);
             faltaConcreto--;
             recibioMaterial = true;
         }
-        // 3. Validar Ladrillo
         else if (faltaLadrillos > 0 && other.TryGetComponent(out ItemLadrillo ladrillo))
         {
             Destroy(ladrillo.gameObject);
             faltaLadrillos--;
             recibioMaterial = true;
         }
-        // 4. Validar Cemento
         else if (faltaCemento > 0 && other.TryGetComponent(out ItemCemento cemento))
         {
             Destroy(cemento.gameObject);
             faltaCemento--;
             recibioMaterial = true;
         }
-        // 5. Validar Madera
         else if (faltaMadera > 0 && other.TryGetComponent(out ItemMadera madera))
         {
             Destroy(madera.gameObject);
@@ -127,16 +115,11 @@ public class ZonaConstruccion : MonoBehaviour
             recibioMaterial = true;
         }
 
-        // Si procesó algo, comprobar si se terminó la fase
-        if (recibioMaterial)
-        {
-            ComprobarProgreso();
-        }
+        if (recibioMaterial) ComprobarProgreso();
     }
 
     void ComprobarProgreso()
     {
-        // Validar que todos los materiales (incluida el agua) estén en cero
         if (faltaConcreto <= 0 && faltaLadrillos <= 0 && faltaCemento <= 0 && faltaMadera <= 0 && faltaAgua <= 0)
         {
             CargarReceta(indiceRecetaActual + 1);
@@ -160,5 +143,12 @@ public class ZonaConstruccion : MonoBehaviour
         if (faltaAgua > 0) texto += "- Agua: " + faltaAgua + "\n"; 
 
         textoRecetaUI.text = texto;
+    }
+
+    // Apaga los edificios cuando el NivelManager desactiva esta mesa
+    private void OnDisable()
+    {
+        if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
+        if (modeloFaseFinal != null) modeloFaseFinal.SetActive(false);
     }
 }

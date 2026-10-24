@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-// Renombramos la clase para el Nivel 3
 [System.Serializable]
 public class RecetaConstruccionN3
 {
@@ -18,21 +17,16 @@ public class RecetaConstruccionN3
 public class ZonaConstruccionNivel3 : MonoBehaviour
 {
     [Header("Configuración de Nivel 3 (La Ermita)")]
-    [Tooltip("Añade aquí las 13 recetas en orden")]
     public List<RecetaConstruccionN3> listaRecetas;
     
     [Header("Modelos 3D de la Construcción")]
-    [Tooltip("El modelo de pre-construcción (Aparece al llegar a la receta 8)")]
     public GameObject modeloFaseMedia;
-    [Tooltip("El modelo de La Ermita final (Aparece al terminar)")]
     public GameObject modeloFaseFinal;
 
     [Header("Interfaz UI")]
     public Text textoRecetaUI;
 
     private int indiceRecetaActual = 0;
-
-    // Contadores internos
     private int faltaConcreto;
     private int faltaLadrillos;
     private int faltaCemento;
@@ -43,7 +37,6 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
     {
         GetComponent<BoxCollider>().isTrigger = true;
         
-        // Nos aseguramos de apagar los modelos al iniciar el nivel
         if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
         if (modeloFaseFinal != null) modeloFaseFinal.SetActive(false);
 
@@ -52,26 +45,25 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
 
     void CargarReceta(int indice)
     {
-        // LÓGICA DE APARICIÓN DE MODELOS 3D (NIVEL 3)
-        // Si llegamos al índice 8 (Es decir, completamos las 8 primeras recetas)
         if (indice == 8)
         {
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(true);
         }
 
-        // Si ya completamos todas las 13 recetas (Índice 13)
         if (indice >= listaRecetas.Count)
         {
-            // Apagamos la pre-construcción y encendemos La Ermita terminada
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
             if (modeloFaseFinal != null) modeloFaseFinal.SetActive(true);
 
             indiceRecetaActual = indice;
             textoRecetaUI.text = "¡IGLESIA LA ERMITA COMPLETADA!";
+            
+            if (NivelManager.Instancia != null)
+                NivelManager.Instancia.RegistrarConstruccionCompletada();
+                
             return;
         }
 
-        // Cargar datos de la nueva receta
         indiceRecetaActual = indice;
         faltaConcreto = listaRecetas[indice].reqConcreto;
         faltaLadrillos = listaRecetas[indice].reqLadrillos;
@@ -84,12 +76,10 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        // Ignorar si lo tiene en la mano o ya acabo el nivel
         if (other.isTrigger || indiceRecetaActual >= listaRecetas.Count) return;
 
         bool recibioMaterial = false;
 
-        // 1. Validar Agua
         if (faltaAgua > 0 && other.TryGetComponent(out CubetaAgua cubeta))
         {
             if (cubeta.estaLlena)
@@ -99,28 +89,24 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
                 recibioMaterial = true;
             }
         }
-        // 2. Validar Concreto
         else if (faltaConcreto > 0 && other.TryGetComponent(out ItemConcreto concreto))
         {
             Destroy(concreto.gameObject);
             faltaConcreto--;
             recibioMaterial = true;
         }
-        // 3. Validar Ladrillo
         else if (faltaLadrillos > 0 && other.TryGetComponent(out ItemLadrillo ladrillo))
         {
             Destroy(ladrillo.gameObject);
             faltaLadrillos--;
             recibioMaterial = true;
         }
-        // 4. Validar Cemento
         else if (faltaCemento > 0 && other.TryGetComponent(out ItemCemento cemento))
         {
             Destroy(cemento.gameObject);
             faltaCemento--;
             recibioMaterial = true;
         }
-        // 5. Validar Madera
         else if (faltaMadera > 0 && other.TryGetComponent(out ItemMadera madera))
         {
             Destroy(madera.gameObject);
@@ -128,10 +114,7 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
             recibioMaterial = true;
         }
 
-        if (recibioMaterial)
-        {
-            ComprobarProgreso();
-        }
+        if (recibioMaterial) ComprobarProgreso();
     }
 
     void ComprobarProgreso()
@@ -159,5 +142,11 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
         if (faltaAgua > 0) texto += "- Agua: " + faltaAgua + "\n"; 
 
         textoRecetaUI.text = texto;
+    }
+
+    private void OnDisable()
+    {
+        if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
+        if (modeloFaseFinal != null) modeloFaseFinal.SetActive(false);
     }
 }
