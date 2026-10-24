@@ -31,6 +31,10 @@ public class moveplayer : MonoBehaviour
     public LayerMask capaEstaciones;
     public float distanciaFrente = 0.8f;
     public float radioEstaciones = 1f;
+    
+    //"Distancia máxima desde el jugador hasta el borde de la estación
+    public float alcanceEstacion = 1f;
+    [Range(0f, 1f)] public float precisionFrente = 0.5f;
 
     public void Awake()
     {
@@ -122,8 +126,14 @@ public class moveplayer : MonoBehaviour
             {
                 ResultadoEstacion r = estacion.Recibir(itemEnMano, puntoCocina);
                 if (r == ResultadoEstacion.ObjetoRecibido)
+                {
                     grabObject = null;
-                return; 
+                    return;
+                }
+                if (r == ResultadoEstacion.SeQuedaEnMano)
+                    return;
+                
+               
             }
 
             grabObject.Interact();
@@ -148,7 +158,7 @@ public class moveplayer : MonoBehaviour
                 grabObject = grabEncontrado;
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
-                return; 
+                return;
             }
         }
 
@@ -180,7 +190,7 @@ public class moveplayer : MonoBehaviour
                     grabObject.puntoAgarre = puntoAgarrePoder;
                     grabObject.Interact();
                 }
-                return; 
+                return;
             }
         }
 
@@ -196,7 +206,7 @@ public class moveplayer : MonoBehaviour
                 {
                     mesa.IniciarCorte(this);
                 }
-                return; 
+                return;
             }
         }
     }
@@ -213,7 +223,20 @@ public class moveplayer : MonoBehaviour
             Estacion e = c.GetComponentInParent<Estacion>();
             if (e == null) continue;
 
-            float d = (c.ClosestPoint(punto) - punto).sqrMagnitude;
+            // punto del borde de la estación más cercano al juga
+            Vector3 borde = c.bounds.ClosestPoint(transform.position);
+            Vector3 haciaEstacion = borde - transform.position;
+            haciaEstacion.y = 0f;
+
+            //  descartar estaciones lejanas
+            if (haciaEstacion.magnitude > alcanceEstacion) continue;
+
+            //  descartar estaciones que no están al frente
+            if (haciaEstacion.sqrMagnitude > 0.0001f &&
+                Vector3.Dot(transform.forward, haciaEstacion.normalized) < precisionFrente) continue;
+
+            
+            float d = (c.bounds.ClosestPoint(punto) - punto).sqrMagnitude;
             if (d < min)
             {
                 min = d;
@@ -286,6 +309,15 @@ public class moveplayer : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position + transform.forward * distanciaFrente, radioEstaciones);
+
+        // líneas amarillas = hasta dónde y en qué ángulo alcanza una estación
+        Gizmos.color = Color.yellow;
+        float angulo = Mathf.Acos(precisionFrente) * Mathf.Rad2Deg;
+        Vector3 izq = Quaternion.Euler(0, -angulo, 0) * transform.forward;
+        Vector3 der = Quaternion.Euler(0, angulo, 0) * transform.forward;
+        Gizmos.DrawLine(transform.position, transform.position + izq * alcanceEstacion);
+        Gizmos.DrawLine(transform.position, transform.position + der * alcanceEstacion);
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * alcanceEstacion);
     }
 
     // --- FUNCIONES NUEVAS PARA LA MESA DE MADERA ---

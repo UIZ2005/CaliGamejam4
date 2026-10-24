@@ -10,7 +10,10 @@ public class ItemCocina : MonoBehaviour
     [SerializeField] private Transform puntoComida;
     [SerializeField] private TipoItem[] comidasAceptadas = { TipoItem.Arepa };
 
-    
+    public GameObject sancochoVacio;
+    public  GameObject sancochLleno;
+
+
     // esta es la arepa en bolita
     [SerializeField] private GameObject visualCrudo;
     
@@ -28,11 +31,19 @@ public class ItemCocina : MonoBehaviour
     // ---- Plato ----
     public bool EsPlato => tipo == TipoItem.Plato;
     public ItemCocina Comida { get; private set; }
+    private bool lleno;
+    private TipoItem llenoCon;
+
+    // Plato sin nada ni comida encima ni lleno 
+    public bool PlatoVacio => EsPlato && Comida == null && !lleno;
 
     private void Awake()
     {
         Grab = GetComponent<GrabObject>();
         SetEstado(estadoInicial);
+
+        if (sancochoVacio) sancochoVacio.SetActive(true);
+        if (sancochLleno) sancochLleno.SetActive(false);
     }
 
     
@@ -86,9 +97,21 @@ public class ItemCocina : MonoBehaviour
         return true;
     }
 
-    
+    // Plato hondo
+    public bool LlenarCon(TipoItem comida)
+    {
+        if (!PlatoVacio || sancochLleno == null) return false;
+        if (System.Array.IndexOf(comidasAceptadas, comida) < 0) return false;
 
-   // depdnde de que pedido se esta requerimiendo
+        lleno = true;
+        llenoCon = comida;
+        if (sancochoVacio) sancochoVacio.SetActive(false);
+        sancochLleno.SetActive(true);
+        return true;
+    }
+
+
+    // depdnde de que pedido se esta requerimiendo
     public bool TryGetTipoServido(out TipoItem servido)
     {
         if (EsPlato)

@@ -3,7 +3,7 @@ using UnityEngine;
 public class EntregaComedor : Estacion
 {
     
-    [SerializeField] private TipoItem[] pedidosAceptados = { TipoItem.Arepa, TipoItem.Cafe };
+    [SerializeField] private TipoItem[] pedidosAceptados = { TipoItem.Arepa, TipoItem.Cafe, TipoItem.Sancocho };
 
     public override ResultadoEstacion Recibir(ItemCocina item, Vector3 posJugador)
     {
