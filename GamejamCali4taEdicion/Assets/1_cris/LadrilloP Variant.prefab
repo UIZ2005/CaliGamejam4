@@ -78,6 +78,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5160604119171379477, guid: d0b96b893ebd39f46ac46ab5c5987dd7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 231383738392720357}
+    - targetCorrespondingSourceObject: {fileID: 5160604119171379477, guid: d0b96b893ebd39f46ac46ab5c5987dd7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2696866235835360483}
   m_SourcePrefab: {fileID: 100100000, guid: d0b96b893ebd39f46ac46ab5c5987dd7, type: 3}
 --- !u!1 &7686689118573098451 stripped
 GameObject:
@@ -130,3 +133,15 @@ MonoBehaviour:
     m_Bits: 64
   offsetPosicion: {x: 0, y: 0, z: -0.8}
   offsetRotacion: {x: 0, y: 0, z: 0}
+--- !u!114 &2696866235835360483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7686689118573098451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80f36cb1faee8e458c26ed4cbebce68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemLadrillo

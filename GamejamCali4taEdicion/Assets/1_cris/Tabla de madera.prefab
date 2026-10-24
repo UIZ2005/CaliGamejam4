@@ -85,6 +85,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 250e6fe08328d354e815596ec92746d8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2697996937347404671}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 250e6fe08328d354e815596ec92746d8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4975886243440456714}
   m_SourcePrefab: {fileID: 100100000, guid: 250e6fe08328d354e815596ec92746d8, type: 3}
 --- !u!1 &4497288235194003199 stripped
 GameObject:
@@ -158,3 +161,15 @@ MonoBehaviour:
     m_Bits: 64
   offsetPosicion: {x: 0, y: 0, z: -0.5}
   offsetRotacion: {x: -270, y: 90, z: 0}
+--- !u!114 &-4975886243440456714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4497288235194003199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a29e58b929d02499008da662d60ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemMadera

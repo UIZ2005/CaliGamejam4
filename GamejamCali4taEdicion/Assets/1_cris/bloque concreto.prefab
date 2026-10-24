@@ -69,6 +69,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19f99016bbaf4d44894357158d6bdd91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1034756251212897219}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 19f99016bbaf4d44894357158d6bdd91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8281493556403115623}
   m_SourcePrefab: {fileID: 100100000, guid: 19f99016bbaf4d44894357158d6bdd91, type: 3}
 --- !u!1 &1177192269480622515 stripped
 GameObject:
@@ -142,3 +145,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-8281493556403115623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177192269480622515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cf04dfce94ec144bb58307529a5167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemConcreto
