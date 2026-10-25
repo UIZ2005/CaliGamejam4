@@ -12,6 +12,8 @@ public class Parrilla : Estacion
     private ItemCocina[] arepas;
     private float[] tiempos;
 
+    public HumoQuemado[] humos;
+
     private void Awake()
     {
         arepas = new ItemCocina[slots.Length];
@@ -23,7 +25,11 @@ public class Parrilla : Estacion
         for (int i = 0; i < arepas.Length; i++)
         {
             ItemCocina a = arepas[i];
-            if (a == null) continue;
+            if (a == null) 
+            {
+                if (humos != null &&i < humos.Length && humos[i] != null) humos[i].Apagar();
+                continue; 
+            }
 
             tiempos[i] += Time.deltaTime;
 
@@ -43,6 +49,13 @@ public class Parrilla : Estacion
                 Destroy(a.gameObject);
                 arepas[i] = null;
                 tiempos[i] = 0f;
+            }
+            if (humos != null && i < humos.Length && humos[i] != null)
+            {
+                if (arepas[i] == null || arepas[i].Estado == EstadoCoccion.Crudo)
+                    humos[i].Apagar();
+                else
+                    humos[i].Mostrar((tiempos[i] - tiempoCoccion) / tiempoAntesDeQuemarse);
             }
         }
     }

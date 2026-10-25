@@ -48,6 +48,9 @@ public class olla : Estacion
     //para la cuchara
     public revolver cuchara;
 
+    //humo
+    public HumoQuemado humo;
+
     private void Start()
     {
         bloque = new MaterialPropertyBlock();
@@ -90,6 +93,13 @@ public class olla : Estacion
                 if (timer >= tiempoVisibleQuemado)
                     Reiniciar();
                 break;
+        }
+
+        //  humo se va oscureciendo; quemada negro
+        if (humo != null)
+        {
+            if (estado == EstadoOlla.Listo) humo.Mostrar(timer / tiempoAntesDeQuemarse);
+            else if (estado == EstadoOlla.Quemado) humo.Mostrar(1f);
         }
     }
 
@@ -147,7 +157,9 @@ public class olla : Estacion
         dentro.Clear();
         timer = 0f;
         porciones = 0;
+        if (humo != null) humo.Apagar();
         if (cuchara) cuchara.Activar(false);
+
 
         // NUEVO: apaga los 4 ingredientes de adentro
         MostrarIngrediente(TipoItem.Pollo, false);

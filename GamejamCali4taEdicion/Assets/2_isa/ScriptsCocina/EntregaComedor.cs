@@ -29,8 +29,6 @@ public class EntregaComedor : Estacion
             return ResultadoEstacion.Rechazado;
         }
 
-        
-
         Debug.Log($"[Entrega] Entregado: {servido}"); // DEBUG
 
         Destroy(item.gameObject); // se va el plato con la comida (o el café)

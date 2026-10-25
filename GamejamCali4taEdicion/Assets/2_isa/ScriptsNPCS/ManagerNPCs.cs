@@ -97,6 +97,7 @@ public class ManagerNPCs : MonoBehaviour
 
                 if (NivelManager.Instancia != null)
                     NivelManager.Instancia.RegistrarComida(tipo);
+
                 Debug.Log($"{npc.name} quedó servido y se va");
             }
             return true;
