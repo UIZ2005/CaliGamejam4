@@ -655,7 +655,7 @@ MonoBehaviour:
   speed: 5
   slow: 3
   rotationSpeed: 10
-  camara: {fileID: 0}
+  camara: {fileID: 639955167416120660}
   quieto: 0
   puntoAgarrePoder: {fileID: 811226994173931865}
   radioInteraccion: 1.5
@@ -670,6 +670,12 @@ MonoBehaviour:
   radioEstaciones: 1
   alcanceEstacion: 1
   precisionFrente: 0.5
+  audioSource: {fileID: 0}
+  pasosbaldosa: {fileID: 0}
+  baldosa:
+    serializedVersion: 2
+    m_Bits: 0
+  distanciaRayoPiso: 1.5
 --- !u!114 &1247375641026840500
 MonoBehaviour:
   m_ObjectHideFlags: 0

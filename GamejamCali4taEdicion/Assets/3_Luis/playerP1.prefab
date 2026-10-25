@@ -858,7 +858,7 @@ MonoBehaviour:
   speed: 3.5
   slow: 2.5
   rotationSpeed: 10
-  camara: {fileID: 0}
+  camara: {fileID: 6278780091746833456}
   quieto: 0
   puntoAgarrePoder: {fileID: 1098421777232494323}
   radioInteraccion: 1.2
