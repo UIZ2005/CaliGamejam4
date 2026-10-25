@@ -264,6 +264,8 @@ MonoBehaviour:
   estadoInicial: 0
   puntoComida: {fileID: 0}
   comidasAceptadas: 00000000
+  sancochoVacio: {fileID: 0}
+  sancochLleno: {fileID: 0}
   visualCrudo: {fileID: 6754628262529497721}
   visualListo: {fileID: 3005163263467922915}
   visualQuemado: {fileID: 0}

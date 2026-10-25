@@ -13,8 +13,16 @@ public class EntregaComedor : Estacion
             Debug.Log($"[Entrega] RECHAZADO: '{item.name}' no tiene comida lista (tipo={item.tipo}, plato vacío={item.PlatoVacio})");
             return ResultadoEstacion.Rechazado;
         }
+        if(ManagerNPCs.Instancia != null)
+        {
+            if (!ManagerNPCs.Instancia.Entregar(servido))
+            {
+                Debug.Log("No hay nadie en la fila con ese pedido");
+                return ResultadoEstacion.SeQuedaEnMano;
+            }
+        }
 
-        if (System.Array.IndexOf(pedidosAceptados, servido) < 0)
+        else if (System.Array.IndexOf(pedidosAceptados, servido) < 0)
         {
             // DEBUG: la comida está bien, pero no está en la lista del Inspector
             Debug.Log($"[Entrega] RECHAZADO: '{servido}' no está en Pedidos Aceptados de {name}");
