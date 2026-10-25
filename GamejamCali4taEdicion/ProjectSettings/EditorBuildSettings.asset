@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/2_isa/Cocina.unity
     guid: 9a64ecc46f6d06848bdf374114bb0c62
+  - enabled: 1
+    path: Assets/4_suarez/SeleccionPJ.unity
+    guid: aa7628a4dcef3e045b8204cdb2b8b663
+  - enabled: 1
+    path: Assets/1_cris/EscenaMecanicas.unity
+    guid: 9c8c5f5e2912a4547934a04cd4c18f30
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c4ce264871e68154797f5b9e367c7b09, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -1377,7 +1377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6e5bfecdcf4e44fbcb18569a309c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuPrincipal
-  escenaCarga: MenuDeCarga
+  escenaCarga: SeleccionPJ
 --- !u!4 &707041281
 Transform:
   m_ObjectHideFlags: 0
