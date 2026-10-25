@@ -13274,7 +13274,7 @@ MonoBehaviour:
     - {fileID: 1460117520}
     - {fileID: 347032645}
   nivelInicial: 1
-  terminarAlCumplirMetas: 0
+  terminarAlCumplirMetas: 1
   textoTiempo: {fileID: 699817187}
   textoComidas: {fileID: 1263768797}
   panelInicioNivel: {fileID: 862307707}
