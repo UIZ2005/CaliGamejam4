@@ -1,41 +1,80 @@
 
 using UnityEngine;
 
-public class CambiarPersonaje : MonoBehaviour
+public class CambiaPersonaje : MonoBehaviour
 {
-    [Header("Avatares disponibles")]
-    [SerializeField] private GameObject avatarA;
-    [SerializeField] private GameObject avatarB;
+    [Header("Avatares de esta posición")]
+    [SerializeField] private GameObject[] avatars = new GameObject[4];
 
-    // 0 = Avatar A, 1 = Avatar B
+    [Header("Configuración")]
+    [SerializeField] private int startingIndex = 0;
+
     private int currentAvatar = 0;
 
     private void Start()
     {
-        // Mostrar únicamente el avatar inicial
-        ShowAvatar(0);
+        if (avatars == null || avatars.Length == 0)
+        {
+            Debug.LogWarning(
+                "CharacterSwitcher: no hay avatares asignados.",
+                this
+            );
+            return;
+        }
+
+        currentAvatar = Mathf.Clamp(
+            startingIndex, 0, avatars.Length - 1
+        );
+
+        ShowAvatar(currentAvatar);
     }
 
     public void NextAvatar()
     {
-        currentAvatar = (currentAvatar + 1) % 2;
+        if (!HasValidAvatars()) return;
+
+        currentAvatar = (currentAvatar + 1) % avatars.Length;
         ShowAvatar(currentAvatar);
     }
 
     public void PreviousAvatar()
     {
-        currentAvatar = (currentAvatar - 1 + 2) % 2;
+        if (!HasValidAvatars()) return;
+
+        currentAvatar =
+            (currentAvatar - 1 + avatars.Length) % avatars.Length;
+
         ShowAvatar(currentAvatar);
     }
 
     private void ShowAvatar(int index)
     {
-        currentAvatar = index;
+        for (int i = 0; i < avatars.Length; i++)
+        {
+            if (avatars[i] != null)
+            {
+                avatars[i].SetActive(i == index);
+            }
+        }
+    }
 
-        if (avatarA != null)
-            avatarA.SetActive(index == 0);
+    private bool HasValidAvatars()
+    {
+        if (avatars == null || avatars.Length == 0)
+            return false;
 
-        if (avatarB != null)
-            avatarB.SetActive(index == 1);
+        foreach (GameObject avatar in avatars)
+        {
+            if (avatar == null)
+            {
+                Debug.LogWarning(
+                    "CharacterSwitcher: falta asignar un avatar.",
+                    this
+                );
+                return false;
+            }
+        }
+
+        return true;
     }
 }
