@@ -44,6 +44,10 @@ public class olla : Estacion
     public float ProgresoCoccion => estado == EstadoOlla.Cocinando ? Mathf.Clamp01(timer / tiempoCoccion) : 0f; // para la barra
     public int Porciones => porciones;
 
+
+    //para la cuchara
+    public revolver cuchara;
+
     private void Start()
     {
         bloque = new MaterialPropertyBlock();
@@ -64,6 +68,7 @@ public class olla : Estacion
                 if (timer >= tiempoCoccion)
                 {
                     estado = EstadoOlla.Listo;
+                    if (cuchara) cuchara.Activar(false);
                     porciones = porcionesPorOlla;
                     timer = 0f;
                     PintarCaldo(colorSancocho);
@@ -120,6 +125,7 @@ public class olla : Estacion
         {
             estado = EstadoOlla.Cocinando;
             timer = 0f;
+            if (cuchara) cuchara.Activar(true);
             Debug.Log($"{name}: cocinando");
         }
         return ResultadoEstacion.ObjetoRecibido;
@@ -141,6 +147,7 @@ public class olla : Estacion
         dentro.Clear();
         timer = 0f;
         porciones = 0;
+        if (cuchara) cuchara.Activar(false);
 
         // NUEVO: apaga los 4 ingredientes de adentro
         MostrarIngrediente(TipoItem.Pollo, false);
