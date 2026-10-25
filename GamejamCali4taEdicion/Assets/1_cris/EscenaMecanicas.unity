@@ -435,11 +435,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &25542354 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 6278780091746833456, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-  m_PrefabInstance: {fileID: 4364894355553848016}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &36049727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28039,10 +28034,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1511032656001219182, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1511032656001219182, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: m_LocalPosition.y
       value: 8.963248
       objectReference: {fileID: 0}
@@ -28106,10 +28097,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3978494588432642832, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4615137265433721210, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: FollowOffset.y
       value: 8
@@ -28120,22 +28107,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4748007709614190132, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-      propertyPath: camara
-      value: 
-      objectReference: {fileID: 25542354}
-    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-      propertyPath: baldosa.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-      propertyPath: radioInteraccion
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6367863900419429372, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6827935575063332584, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
