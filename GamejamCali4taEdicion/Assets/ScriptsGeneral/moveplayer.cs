@@ -14,7 +14,7 @@ public class moveplayer : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10f;
 
     public Camera camara;
-    private bool quieto = false;
+    public bool quieto = false;
 
     [Header("Agarre")]
     public Transform puntoAgarrePoder;
@@ -107,6 +107,11 @@ public class moveplayer : MonoBehaviour
             if (!EstaAlFrente(objeto))
                 continue;
 
+            if (objeto.TryGetComponent(out actionEvent actionevent))
+            {
+                actionevent.enviarAccion();
+            }
+
             if (objeto.TryGetComponent(out Eatobject comidaencontrada))
             {
                 energia.RecuperarEnergia(comidaencontrada.comer());
@@ -152,6 +157,12 @@ public class moveplayer : MonoBehaviour
         {
             if (!EstaAlFrente(objeto))
                 continue;
+
+
+            if (objeto.TryGetComponent(out actionEvent actionevent))
+            {
+                actionevent.enviarAccion();
+            }
 
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
