@@ -18,6 +18,7 @@ public class Mesa : Estacion
     public bool Rellenando => rellenando;
     public float ProgresoRelleno => rellenando ? Mathf.Clamp01(timer / tiempoRelleno) : 1f; // para la barra visual
 
+    public revolver cuchara;
     private void Awake()
     {
         items = new ItemCocina[slots.Length];
@@ -49,6 +50,7 @@ public class Mesa : Estacion
             {
                 rellenando = true;
                 timer = 0f;
+                if (cuchara) cuchara.Activar(true);
                 Debug.Log($"{name}: se acabó, preparando...");
             }
             return;
@@ -58,6 +60,7 @@ public class Mesa : Estacion
         if (timer >= tiempoRelleno)
         {
             rellenando = false;
+            if (cuchara) cuchara.Activar(false);
             Llenar();
             Debug.Log($"{name}: ¡listo!");
         }

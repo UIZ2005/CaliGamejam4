@@ -32,6 +32,10 @@ public class JarraLimonada : Estacion
     public bool Mezclando => mezclando;
     public float ProgresoMezcla => mezclando ? Mathf.Clamp01(timer / tiempoMezcla) : 0f; // para la barra
 
+
+    //para la cucahra
+    public revolver cuchara;
+
     private void Awake()
     {
         vasos = new ItemCocina[slotsVasos.Length];
@@ -53,6 +57,7 @@ public class JarraLimonada : Estacion
         if (timer >= tiempoMezcla)
         {
             mezclando = false;
+            if (cuchara) cuchara.Activar(false);
             CrearVasos();
             Reiniciar(); // la jarra vuelve a agua
             Debug.Log($"{name}: ¡limonada lista! ({vasos.Length} vasos)");
@@ -92,6 +97,7 @@ public class JarraLimonada : Estacion
         {
             mezclando = true;
             timer = 0f;
+            if (cuchara) cuchara.Activar(true);
             Debug.Log($"{name}: mezclando...");
         }
         return ResultadoEstacion.ObjetoRecibido;
@@ -129,6 +135,7 @@ public class JarraLimonada : Estacion
     {
         dentro.Clear();
         timer = 0f;
+        if (cuchara) cuchara.Activar(false);
         MostrarIngrediente(TipoItem.Panela, false);
         MostrarIngrediente(TipoItem.Limon, false);
         PintarAgua(colorAgua);
