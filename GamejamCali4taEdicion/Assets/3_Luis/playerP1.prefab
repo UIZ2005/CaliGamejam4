@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2625412823472344508}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -570,12 +570,20 @@ MonoBehaviour:
   slow: 2.5
   rotationSpeed: 10
   camara: {fileID: 0}
+  quieto: 0
   puntoAgarrePoder: {fileID: 1098421777232494323}
   radioInteraccion: 1.2
   capaAgarre:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 3162445112447582454}
+  capaEstaciones:
+    serializedVersion: 2
+    m_Bits: 128
+  distanciaFrente: 0.67
+  radioEstaciones: 0.49
+  alcanceEstacion: 0.81
+  precisionFrente: 0.85
 --- !u!114 &6827935575063332584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,9 +596,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491decaabc5f2d84395aabea66ad9dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
-  energiaMaxima: 100
-  energiaActual: 100
-  consumoPorSegundo: 8
+  energiaMaxima: 1000
+  energiaActual: 1000
+  consumoPorSegundo: 2
   barraEnergia: {fileID: 6379461261685447110}
   rellenoBarra: {fileID: 739088531028309352}
   colorAlto: {r: 0, g: 1, b: 0, a: 1}

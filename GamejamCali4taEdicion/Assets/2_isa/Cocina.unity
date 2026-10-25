@@ -8205,6 +8205,7 @@ MonoBehaviour:
   prefab: {fileID: 7218982497573269055, guid: 9249de92a8af26d47ba0871312cd6359, type: 3}
   aceptaDevolucion: 1
   tapa: {fileID: 1435386149}
+  puntoEncima: {fileID: 0}
 --- !u!65 &514307705
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14380,6 +14381,7 @@ MonoBehaviour:
   prefab: {fileID: 2406850835869021727, guid: 57aa6013a99f554429b4185445513b52, type: 3}
   aceptaDevolucion: 1
   tapa: {fileID: 0}
+  puntoEncima: {fileID: 0}
 --- !u!1001 &765541509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16791,6 +16793,7 @@ MonoBehaviour:
     duracionSegundos: 180
     metaComidas: 4
     objetosDelNivel:
+    - {fileID: 1297915710}
     - {fileID: 551380973}
   - nombre: Nivel 3
     duracionSegundos: 180
@@ -23164,6 +23167,7 @@ MonoBehaviour:
   prefab: {fileID: 8222302389672773407, guid: 7405333358a213641918c982aadfb5ae, type: 3}
   aceptaDevolucion: 1
   tapa: {fileID: 551380973}
+  puntoEncima: {fileID: 0}
 --- !u!65 &1336484158
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23235,6 +23239,7 @@ MonoBehaviour:
   prefab: {fileID: 731758811655514978, guid: 62bfbfc56f281784dbe4501cdbc44acf, type: 3}
   aceptaDevolucion: 1
   tapa: {fileID: 2012550441}
+  puntoEncima: {fileID: 0}
 --- !u!65 &1356199326
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23479,6 +23484,7 @@ MonoBehaviour:
   prefab: {fileID: 2652164719928171954, guid: e2392db743e1610479a12f76a2b7818a, type: 3}
   aceptaDevolucion: 1
   tapa: {fileID: 162620999}
+  puntoEncima: {fileID: 0}
 --- !u!1 &1421813992
 GameObject:
   m_ObjectHideFlags: 0
@@ -35604,6 +35610,7 @@ MonoBehaviour:
   prefab: {fileID: 5764498376730682171, guid: 702a3ec49cbdc4a4c9e5bee0ca1e58b4, type: 3}
   aceptaDevolucion: 1
   tapa: {fileID: 6063467701249630573}
+  puntoEncima: {fileID: 0}
 --- !u!65 &1944255988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37955,7 +37962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2807517346152145826, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.68
+      value: 1.22
       objectReference: {fileID: 0}
     - target: {fileID: 2807517346152145826, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -37963,7 +37970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2807517346152145826, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.82
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 2807517346152145826, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38001,6 +38008,22 @@ PrefabInstance:
       propertyPath: camara
       value: 
       objectReference: {fileID: 2126949393}
+    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
+      propertyPath: alcanceEstacion
+      value: 0.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
+      propertyPath: distanciaFrente
+      value: 0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
+      propertyPath: precisionFrente
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
+      propertyPath: radioEstaciones
+      value: 0.49
+      objectReference: {fileID: 0}
     - target: {fileID: 6175161177029385872, guid: 5dbca7215fb0c624daf4dda9daceda3c, type: 3}
       propertyPath: capaEstaciones.m_Bits
       value: 128
