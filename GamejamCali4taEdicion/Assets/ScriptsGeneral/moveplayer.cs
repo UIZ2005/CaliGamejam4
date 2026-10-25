@@ -135,7 +135,7 @@ public class moveplayer : MonoBehaviour
                     grabObject = null;
                     return;
                 }
-                if (r == ResultadoEstacion.SeQuedaEnMano)
+                //if (r == ResultadoEstacion.SeQuedaEnMano)
                     return;
                 
                
@@ -167,10 +167,19 @@ public class moveplayer : MonoBehaviour
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
                 grabObject = grabEncontrado;
+                //correcion del bug que habua en la cocina
+                if (grabEncontrado.TryGetComponent(out ItemCocina _))
+                {
+                    grabObject.AgarrarDirecto(puntoAgarrePoder);
+                    return;
+                }
+
+
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
                 return;
             }
+
         }
 
         // --- COCINA ---
