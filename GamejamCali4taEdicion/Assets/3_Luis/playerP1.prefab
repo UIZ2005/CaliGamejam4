@@ -361,7 +361,7 @@ Transform:
   m_GameObject: {fileID: 7650394467087043634}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3981935, y: 4.2712234e-15, z: -1.8541051e-15, w: 0.9173015}
-  m_LocalPosition: {x: 0, y: 3.0923204, z: -3.9986932}
+  m_LocalPosition: {x: 0, y: 3.0923207, z: -3.9986928}
   m_LocalScale: {x: 1.5560657, y: 1.3148466, z: 1.2866709}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -877,7 +877,7 @@ MonoBehaviour:
   pasosbaldosa: {fileID: 8300000, guid: 5236082639430804aa63775ce4a3c37f, type: 3}
   baldosa:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   distanciaRayoPiso: 1.5
 --- !u!114 &6827935575063332584
 MonoBehaviour:

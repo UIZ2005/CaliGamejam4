@@ -95,7 +95,7 @@ MonoBehaviour:
   capaObjetos:
     serializedVersion: 2
     m_Bits: 64
-  offsetPosicion: {x: 0, y: 0, z: -0.8}
+  offsetPosicion: {x: 0, y: 0, z: 0}
   offsetRotacion: {x: 270, y: 0, z: 90}
 --- !u!65 &2560343307028927106
 BoxCollider:
