@@ -121,8 +121,22 @@ public class moveplayer : MonoBehaviour
     private void OnInteract(InputValue context)
     {
         if (!context.isPressed) return;
+        Collider[] objetosCercanos = Physics.OverlapSphere(
+            transform.position,
+            radioInteraccion,
+            capaAgarre
+        );
+        foreach (var objeto in objetosCercanos)
+        {
+            if (!EstaAlFrente(objeto))
+                continue;
+            if (objeto.TryGetComponent(out actionEvent actionevent))
+            {
+                actionevent.enviarAccion();
+            }
+        }
 
-        Vector3 puntoCocina = transform.position + transform.forward * distanciaFrente;
+            Vector3 puntoCocina = transform.position + transform.forward * distanciaFrente;
         Estacion estacion = BuscarEstacionCocina(puntoCocina);
 
         if (grabObject != null)
@@ -146,23 +160,11 @@ public class moveplayer : MonoBehaviour
             return;
         }
 
-        Collider[] objetosCercanos = Physics.OverlapSphere(
-            transform.position,
-            radioInteraccion,
-            capaAgarre
-        );
-
         // --- PRIORIDAD 1: Buscar objetos sueltos en el piso ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
                 continue;
-
-
-            if (objeto.TryGetComponent(out actionEvent actionevent))
-            {
-                actionevent.enviarAccion();
-            }
 
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
