@@ -51,6 +51,12 @@ public class olla : Estacion
     //humo
     public HumoQuemado humo;
 
+    //sonido agua
+    public AudioSource audioSource;
+    public AudioClip sonidoagua;
+    public AudioClip sonidoComidaLista;
+
+
     private void Start()
     {
         bloque = new MaterialPropertyBlock();
@@ -71,7 +77,10 @@ public class olla : Estacion
                 if (timer >= tiempoCoccion)
                 {
                     estado = EstadoOlla.Listo;
+                    
                     if (cuchara) cuchara.Activar(false);
+                    if (audioSource) audioSource.Stop();
+                    if (audioSource) audioSource.PlayOneShot(sonidoComidaLista);
                     porciones = porcionesPorOlla;
                     timer = 0f;
                     PintarCaldo(colorSancocho);
@@ -136,6 +145,7 @@ public class olla : Estacion
             estado = EstadoOlla.Cocinando;
             timer = 0f;
             if (cuchara) cuchara.Activar(true);
+            if (audioSource) { audioSource.clip = sonidoagua; audioSource.loop = true; audioSource.Play(); }
             Debug.Log($"{name}: cocinando");
         }
         return ResultadoEstacion.ObjetoRecibido;
@@ -159,9 +169,10 @@ public class olla : Estacion
         porciones = 0;
         if (humo != null) humo.Apagar();
         if (cuchara) cuchara.Activar(false);
+        if (audioSource) audioSource.Stop();
 
 
-        // NUEVO: apaga los 4 ingredientes de adentro
+        //  apaga los 4 ingredientes de adentro
         MostrarIngrediente(TipoItem.Pollo, false);
         MostrarIngrediente(TipoItem.Yuca, false);
         MostrarIngrediente(TipoItem.Platano, false);

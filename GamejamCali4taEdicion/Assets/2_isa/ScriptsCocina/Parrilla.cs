@@ -14,6 +14,9 @@ public class Parrilla : Estacion
 
     public HumoQuemado[] humos;
 
+    public AudioSource audioSource;
+    public AudioClip sonidoFuego;
+
     private void Awake()
     {
         arepas = new ItemCocina[slots.Length];
@@ -56,6 +59,24 @@ public class Parrilla : Estacion
                     humos[i].Apagar();
                 else
                     humos[i].Mostrar((tiempos[i] - tiempoCoccion) / tiempoAntesDeQuemarse);
+            }
+        }
+        //  suena mientras haya al menos una arepa en la parrilla
+        if (audioSource)
+        {
+            bool hayArepas = false;
+            for (int j = 0; j < arepas.Length; j++)
+                if (arepas[j] != null) { hayArepas = true; break; }
+
+            if (hayArepas && !audioSource.isPlaying)
+            {
+                audioSource.clip = sonidoFuego;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+            else if (!hayArepas && audioSource.isPlaying)
+            {
+                audioSource.Stop();
             }
         }
     }

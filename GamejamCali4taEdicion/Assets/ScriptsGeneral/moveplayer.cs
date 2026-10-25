@@ -36,6 +36,13 @@ public class moveplayer : MonoBehaviour
     public float alcanceEstacion = 1f;
     [Range(0f, 1f)] public float precisionFrente = 0.5f;
 
+
+    //SONIDOS
+    public AudioSource audioSource;
+    public AudioClip pasosbaldosa;
+    public LayerMask baldosa;
+    public float distanciaRayoPiso = 1.5f;
+
     public void Awake()
     {
         audio = FindAnyObjectByType<audioManager>();
@@ -268,7 +275,29 @@ public class moveplayer : MonoBehaviour
         return mejor;
     }
 
+    private void Update()
+    {
+        if (audioSource == null) return;
 
+        bool caminando = !quieto && moveInput != Vector2.zero;
+
+        Vector3 origen = transform.position + Vector3.up * 0.5f;
+        bool sobreBaldosa = Physics.Raycast(origen, Vector3.down, distanciaRayoPiso, baldosa, QueryTriggerInteraction.Ignore);
+
+        if (caminando && sobreBaldosa)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.clip = pasosbaldosa;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        }
+        else if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+    }
     private void FixedUpdate()
     {
         if (quieto) return;
