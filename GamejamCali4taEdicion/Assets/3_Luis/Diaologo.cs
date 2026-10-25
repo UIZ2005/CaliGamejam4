@@ -10,13 +10,14 @@ public class Diaologo : MonoBehaviour
     [Header("Sistema de dialogos")]
     public string nombreNpc;
     public GameObject dialogopanel;
+    public Animator viejito;
 
     public TextMeshProUGUI texto;
 
     [SerializeField, TextArea(4, 6)]
     private string[] lineasDialogo;
 
-    private float typingtext = 0.05f;
+    public float typingtext = 0.05f;
 
     private bool didDialagoStart;
     private int LineIndex;
@@ -40,15 +41,18 @@ public class Diaologo : MonoBehaviour
             {
 
                 startdialogo();
+                viejito.SetInteger("talk", 1);
             }
             else if (texto.text == ObtenerLineaActual())
             {
                 nextdialogoLine();
+                viejito.SetInteger("talk", 2);
             }
             else
             {
                 StopAllCoroutines();
                 texto.text = ObtenerLineaActual();
+                viejito.SetInteger("talk", 3);
             }
     }
 
@@ -110,11 +114,7 @@ public class Diaologo : MonoBehaviour
 
             dialogopanel.SetActive(false);
             flujo.aumentarDialogo();
-
-            foreach (moveplayer pj in player)
-            {
-                pj.desactivarquieto();
-            }
+            viejito.SetInteger("talk",0);
 
             texto.text = "";
             gameObject.SetActive(false);
