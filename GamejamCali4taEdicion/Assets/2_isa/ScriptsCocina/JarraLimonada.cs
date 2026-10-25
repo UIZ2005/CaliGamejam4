@@ -36,6 +36,11 @@ public class JarraLimonada : Estacion
     //para la cucahra
     public revolver cuchara;
 
+    //sonidos revolver
+    public AudioSource Audiorevolver;
+    public AudioClip sonidoRevolver;
+    public AudioClip sonidoListo;
+
     private void Awake()
     {
         vasos = new ItemCocina[slotsVasos.Length];
@@ -58,6 +63,8 @@ public class JarraLimonada : Estacion
         {
             mezclando = false;
             if (cuchara) cuchara.Activar(false);
+            if (Audiorevolver) Audiorevolver.Stop();                          // NUEVO: deja de revolver
+            if (Audiorevolver) Audiorevolver.PlayOneShot(sonidoListo);
             CrearVasos();
             Reiniciar(); // la jarra vuelve a agua
             Debug.Log($"{name}: ¡limonada lista! ({vasos.Length} vasos)");
@@ -98,6 +105,7 @@ public class JarraLimonada : Estacion
             mezclando = true;
             timer = 0f;
             if (cuchara) cuchara.Activar(true);
+            if (Audiorevolver) { Audiorevolver.clip = sonidoRevolver; Audiorevolver.loop = true; Audiorevolver.Play(); }
             Debug.Log($"{name}: mezclando...");
         }
         return ResultadoEstacion.ObjetoRecibido;

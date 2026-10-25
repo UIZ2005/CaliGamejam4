@@ -43,6 +43,9 @@ public class moveplayer : MonoBehaviour
     public LayerMask baldosa;
     public float distanciaRayoPiso = 1.5f;
 
+    public AudioSource audioAgarre;   // AudioSource propio 
+    public AudioClip sonidoAgarre;
+
     public void Awake()
     {
         audio = FindAnyObjectByType<audioManager>();
@@ -180,6 +183,7 @@ public class moveplayer : MonoBehaviour
                 if (grabEncontrado.TryGetComponent(out ItemCocina _))
                 {
                     grabObject.AgarrarDirecto(puntoAgarrePoder);
+                    SonarAgarre();
                     return;
                 }
 
@@ -199,6 +203,7 @@ public class moveplayer : MonoBehaviour
             {
                 grabObject = dado.Grab;
                 grabObject.AgarrarDirecto(puntoAgarrePoder);
+                SonarAgarre();
                 return;
             }
         }
@@ -387,5 +392,10 @@ public class moveplayer : MonoBehaviour
         grabObject = nuevoGrab;
         grabObject.puntoAgarre = puntoAgarrePoder;
         grabObject.Interact();
+    }
+
+    private void SonarAgarre()
+    {
+        if (audioAgarre && sonidoAgarre) audioAgarre.PlayOneShot(sonidoAgarre);
     }
 }
