@@ -27,6 +27,7 @@ public class Diaologo : MonoBehaviour
 
     private void Start()
     {
+        flujo = FindAnyObjectByType<FlujoTutorial>();
         audioManager = FindAnyObjectByType<audioManager>();
         player = FindObjectsByType<moveplayer>(FindObjectsSortMode.None);
     }
@@ -114,6 +115,7 @@ public class Diaologo : MonoBehaviour
             {
                 pj.desactivarquieto();
             }
+
             texto.text = "";
             gameObject.SetActive(false);
         }

@@ -14,12 +14,12 @@ public class ManejoUI : MonoBehaviour
     public bool dialogoActivo=true;
     void Start()
     {
-        dialogos = flujo.Dialogos;
-        flujo = FindAnyObjectByType<FlujoTutorial>();
         gameObject.GetComponent<moveplayer>().activarquieto();
+        flujo = FindAnyObjectByType<FlujoTutorial>();
     }
     private void OnMove(InputValue context)
     {
+        
         if (!gamestart) { 
         interaccion = context.Get<Vector2>();
         cambiarPersonaje(interaccion.x);
@@ -64,6 +64,7 @@ public class ManejoUI : MonoBehaviour
     }
     public void Empezarjuego()
     {
+        dialogos = flujo.Dialogos;
         dialogos[0].interact();
         gamestart = true;
         gameObject.GetComponent<moveplayer>().enabled=true;
