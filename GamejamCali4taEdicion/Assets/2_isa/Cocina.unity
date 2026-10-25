@@ -6539,8 +6539,8 @@ MonoBehaviour:
   colorSancocho: {r: 0.9, g: 0.7, b: 0.25, a: 1}
   colorQuemado: {r: 0.08, g: 0.06, b: 0.05, a: 1}
   tiempoCoccion: 20
-  tiempoAntesDeQuemarse: 12
-  tiempoVisibleQuemado: 2
+  tiempoAntesDeQuemarse: 13
+  tiempoVisibleQuemado: 4
   porcionesPorOlla: 3
   cuchara: {fileID: 778872723}
 --- !u!65 &974581925
@@ -7237,7 +7237,7 @@ MonoBehaviour:
   - {fileID: 354611125}
   - {fileID: 1160543960}
   tiempoCoccion: 10
-  tiempoAntesDeQuemarse: 6
+  tiempoAntesDeQuemarse: 8
   tiempoVisibleQuemada: 4
 --- !u!65 &1168319862
 BoxCollider:
@@ -11309,8 +11309,8 @@ MonoBehaviour:
   colorSancocho: {r: 0.9, g: 0.7, b: 0.25, a: 1}
   colorQuemado: {r: 0.08, g: 0.06, b: 0.05, a: 1}
   tiempoCoccion: 20
-  tiempoAntesDeQuemarse: 12
-  tiempoVisibleQuemado: 2
+  tiempoAntesDeQuemarse: 13
+  tiempoVisibleQuemado: 4
   porcionesPorOlla: 3
   cuchara: {fileID: 1245131244}
 --- !u!1 &2012550441
