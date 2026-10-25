@@ -200,6 +200,6 @@ public class NivelManager : MonoBehaviour
             textoTiempo.text = $"{t / 60}:{t % 60:00}";
         }
         if (textoComidas)
-            textoComidas.text = $"Atendidos: {comidas}/{N.metaComidas}";
+            textoComidas.text = $"{comidas}/{N.metaComidas}";
     }
 }
