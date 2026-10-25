@@ -134,7 +134,7 @@ public class NivelManager : MonoBehaviour
         // --- ACTUALIZAMOS EL MOTIVO DE GAME OVER PARA INCLUIR CONSTRUCCIÓN ---
         string motivo = "";
         if (comidas < N.metaComidas) 
-            motivo += $"Faltaron {N.metaComidas - comidas} comidas por servir.\n";
+            motivo += $"Faltaron {N.metaComidas - comidas} personas por atender.\n";
         if (!construccionCompletada) 
             motivo += "La construcción no se terminó a tiempo.";
 
@@ -158,7 +158,7 @@ public class NivelManager : MonoBehaviour
         if (terminarAlCumplirMetas && MetasCumplidas()) TerminarNivel();
     }
     
-    // --- NUEVO MÉTODO PARA AVISAR QUE LA CONSTRUCCIÓN TERMINÓ ---
+    
     public void RegistrarConstruccionCompletada()
     {
         if (!jugando) return;
@@ -171,7 +171,7 @@ public class NivelManager : MonoBehaviour
 
     private bool MetasCumplidas()
     {
-        // --- AHORA EXIGE AMBAS COSAS ---
+        
         return (comidas >= N.metaComidas) && construccionCompletada;
     }
 
@@ -200,6 +200,6 @@ public class NivelManager : MonoBehaviour
             textoTiempo.text = $"{t / 60}:{t % 60:00}";
         }
         if (textoComidas)
-            textoComidas.text = $"Comidas: {comidas}/{N.metaComidas}";
+            textoComidas.text = $"Atendidos: {comidas}/{N.metaComidas}";
     }
 }

@@ -29,8 +29,7 @@ public class EntregaComedor : Estacion
             return ResultadoEstacion.Rechazado;
         }
 
-        if (NivelManager.Instancia != null)
-            NivelManager.Instancia.RegistrarComida(servido);
+        
 
         Debug.Log($"[Entrega] Entregado: {servido}"); // DEBUG
 

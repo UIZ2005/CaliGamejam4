@@ -94,6 +94,9 @@ public class ManagerNPCs : MonoBehaviour
                 npc.Salir(puntoSalida.position);
                 fila.RemoveAt(i);
                 ReordenarFila();
+
+                if (NivelManager.Instancia != null)
+                    NivelManager.Instancia.RegistrarComida(tipo);
                 Debug.Log($"{npc.name} quedó servido y se va");
             }
             return true;
