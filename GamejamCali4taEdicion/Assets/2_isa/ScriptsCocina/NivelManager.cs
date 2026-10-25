@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections; // Necesario para usar Corrutinas (WaitForSeconds)
 
 public class NivelManager : MonoBehaviour
 {
@@ -35,8 +36,9 @@ public class NivelManager : MonoBehaviour
     private int comidas;
     private bool jugando;
     
-    // --- NUEVA VARIABLE DE CONSTRUCCIÓN ---
+    // Variables de control de estado
     private bool construccionCompletada;
+    private bool enTransicion; // Nueva variable para saber si estamos esperando los 2 segundos
 
     public int NivelActual => indice + 1;   // 1, 2, 3
     public bool Jugando => jugando;
@@ -56,21 +58,35 @@ public class NivelManager : MonoBehaviour
 
     private void Update()
     {
+        // Si no estamos jugando (por ejemplo, si estamos en los 2 segundos de espera), el reloj no avanza
         if (!jugando) return;
 
         tiempoRestante -= Time.deltaTime;
+        
+        // ¿Qué pasa si el reloj llega a 0?
         if (tiempoRestante <= 0f)
         {
             tiempoRestante = 0f;
             ActualizarUI();
-            TerminarNivel();
+            
+            // Verificamos si en el último milisegundo alcanzaron a cumplir las metas
+            if (MetasCumplidas())
+            {
+                IniciarTransicionVictoria();
+            }
+            else
+            {
+                TerminarNivel(); // Aquí sí pierden
+            }
             return;
         }
 
         ActualizarUI();
 
         if (terminarAlCumplirMetas && MetasCumplidas())
-            TerminarNivel();
+        {
+            IniciarTransicionVictoria();
+        }
     }
 
     private void MostrarInicioNivel(int i)
@@ -91,8 +107,10 @@ public class NivelManager : MonoBehaviour
         tiempoRestante = N.duracionSegundos;
         comidas = 0;
         
-        // --- REINICIAMOS LA CONSTRUCCIÓN AL INICIAR EL NIVEL ---
         construccionCompletada = false;
+        enTransicion = false; // Reiniciamos el estado de transición
+
+        LimpiarMaterialesSueltos();
 
         OcultarPaneles();
         Time.timeScale = 1f;
@@ -101,6 +119,42 @@ public class NivelManager : MonoBehaviour
         ActualizarUI();
         OnNivelEmpieza?.Invoke(NivelActual);
         Debug.Log($"Empieza {N.nombre}");
+    }
+
+    // --- NUEVAS FUNCIONES PARA LA ESPERA DE 2 SEGUNDOS ---
+    private void IniciarTransicionVictoria()
+    {
+        if (enTransicion) return; // Evita que se llame varias veces
+        enTransicion = true;
+        
+        // ¡CRÍTICO! Al poner jugando en false, el Update detiene el cronómetro inmediatamente
+        jugando = false; 
+        
+        // Iniciamos la cuenta regresiva de 2 segundos en segundo plano
+        StartCoroutine(RutinaVictoria());
+    }
+
+    private IEnumerator RutinaVictoria()
+    {
+        // Espera exactamente 2 segundos sin pausar el juego para que se vean las animaciones
+        yield return new WaitForSeconds(2f);
+        
+        // Después de 2 segundos, lanza la siguiente pantalla
+        TerminarNivel();
+    }
+    // -----------------------------------------------------
+
+    private void LimpiarMaterialesSueltos()
+    {
+        foreach (var item in FindObjectsOfType<ItemConcreto>()) Destroy(item.gameObject);
+        foreach (var item in FindObjectsOfType<ItemLadrillo>()) Destroy(item.gameObject);
+        foreach (var item in FindObjectsOfType<ItemCemento>()) Destroy(item.gameObject);
+        foreach (var item in FindObjectsOfType<ItemMadera>()) Destroy(item.gameObject);
+
+        foreach (var cubeta in FindObjectsOfType<CubetaAgua>())
+        {
+            cubeta.Vaciar();
+        }
     }
 
     private void TerminarNivel()
@@ -131,7 +185,6 @@ public class NivelManager : MonoBehaviour
         OcultarPaneles();
         if (panelGameOver) panelGameOver.SetActive(true);
 
-        // --- ACTUALIZAMOS EL MOTIVO DE GAME OVER PARA INCLUIR CONSTRUCCIÓN ---
         string motivo = "";
         if (comidas < N.metaComidas) 
             motivo += $"Faltaron {N.metaComidas - comidas} personas por atender.\n";
@@ -154,10 +207,8 @@ public class NivelManager : MonoBehaviour
         comidas++;
         Debug.Log($"Comedor: entregado {tipo}. {comidas}/{N.metaComidas}");
         
-        // Comprobar si ya ganaron al servir la comida
-        if (terminarAlCumplirMetas && MetasCumplidas()) TerminarNivel();
+        if (terminarAlCumplirMetas && MetasCumplidas()) IniciarTransicionVictoria();
     }
-    
     
     public void RegistrarConstruccionCompletada()
     {
@@ -165,13 +216,11 @@ public class NivelManager : MonoBehaviour
         construccionCompletada = true;
         Debug.Log($"Construcción completada para el nivel {NivelActual}");
         
-        // Comprobar si ya ganaron al poner el último ladrillo
-        if (terminarAlCumplirMetas && MetasCumplidas()) TerminarNivel();
+        if (terminarAlCumplirMetas && MetasCumplidas()) IniciarTransicionVictoria();
     }
 
     private bool MetasCumplidas()
     {
-        
         return (comidas >= N.metaComidas) && construccionCompletada;
     }
 
