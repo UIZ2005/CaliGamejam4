@@ -23,11 +23,13 @@ public class Diaologo : MonoBehaviour
     private int LineIndex;
     private moveplayer[] player;
     private FlujoTutorial flujo;
+    private EscenaFInal escenaFInal;
 
     private audioManager audioManager;
 
     private void Start()
     {
+        escenaFInal = FindAnyObjectByType<EscenaFInal>();
         flujo = FindAnyObjectByType<FlujoTutorial>();
         audioManager = FindAnyObjectByType<audioManager>();
         player = FindObjectsByType<moveplayer>(FindObjectsSortMode.None);
@@ -120,8 +122,14 @@ public class Diaologo : MonoBehaviour
             didDialagoStart = false;
 
             dialogopanel.SetActive(false);
+
+            if(flujo!=null)
             flujo.aumentarDialogo();
+
             viejito.SetInteger("talk",0);
+
+            if (escenaFInal != null)
+                escenaFInal.iniciarfin();
 
             texto.text = "";
             gameObject.SetActive(false);

@@ -20,10 +20,13 @@ public class FlujoTutorial : MonoBehaviour
 
 
     public ManejoUI[] manejouis;
+    private AudioManager audio;
 
     void Start()
     {
+        audio = FindAnyObjectByType<AudioManager>();
         camarator = camaraanim.GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -44,10 +47,12 @@ public class FlujoTutorial : MonoBehaviour
                 break;
             case 2:
                 //Se activa cuando dejas la arepa en la parrilla
+                audio.seleccionAudio(0);
                 StartCoroutine(accion2());
                 break;
             case 3:
                 //se activa cuando entregas la arepa a el cliente
+                audio.seleccionAudio(1);
                 StartCoroutine(accion3());
                 break;
             case 4:
@@ -232,6 +237,7 @@ public class FlujoTutorial : MonoBehaviour
     {
         //Que le entregue la arepa a el cliente
         aparicionNpc.SetActive(true);
+        audio.seleccionAudio(2);
         camarator.SetInteger("Steps",2);
         camaraviejo.SetActive(false);
         yield return new WaitForSeconds(0.8f);
