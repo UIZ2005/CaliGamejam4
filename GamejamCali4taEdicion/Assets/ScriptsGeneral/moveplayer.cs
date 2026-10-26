@@ -51,6 +51,7 @@ public class moveplayer : MonoBehaviour
 
     public AudioSource audioAgarre;
     public AudioClip sonidoAgarre;
+    public AudioClip sonidoComer;
 
     public void Awake()
     {
@@ -129,6 +130,10 @@ public class moveplayer : MonoBehaviour
         {
             if (!EstaAlFrente(objeto))
                 continue;
+            if (objeto.TryGetComponent(out actionEvent actionevent))
+            {
+                actionevent.enviarAccion();
+            }
 
             Eatobject comida = objeto.GetComponent<Eatobject>();
 
@@ -153,6 +158,7 @@ public class moveplayer : MonoBehaviour
                 if (grabDeLaComida == null)
                     grabDeLaComida = comida.GetComponentInParent<GrabObject>();
             }
+            
         }
 
         if (mejorComida == null)
@@ -163,9 +169,10 @@ public class moveplayer : MonoBehaviour
         {
             grabObject = null;
         }
-
+        Debug.Log($"[Comer] Llegó. audioAgarre={(audioAgarre ? "OK" : "VACÍO")} sonidoComer={(sonidoComer ? "OK" : "VACÍO")}");
         float energiaRecuperada = mejorComida.comer();
         energia.RecuperarEnergia(energiaRecuperada);
+        if (audioAgarre && sonidoComer) audioAgarre.PlayOneShot(sonidoComer);
     }
 
 

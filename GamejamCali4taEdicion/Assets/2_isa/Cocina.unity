@@ -5925,16 +5925,19 @@ MonoBehaviour:
     - {fileID: 1435386149}
     - {fileID: 551380973}
     - {fileID: 162620999}
+    panelIngredientes: {fileID: 0}
   - nombre: Nivel 2
     duracionSegundos: 180
     metaComidas: 4
     objetosDelNivel:
     - {fileID: 551380973}
+    panelIngredientes: {fileID: 0}
   - nombre: Nivel 3
     duracionSegundos: 180
     metaComidas: 8
     objetosDelNivel:
     - {fileID: 1297915710}
+    panelIngredientes: {fileID: 0}
   nivelInicial: 3
   terminarAlCumplirMetas: 0
   textoTiempo: {fileID: 845273849}
