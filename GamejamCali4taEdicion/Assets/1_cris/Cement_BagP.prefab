@@ -159,7 +159,7 @@ MonoBehaviour:
   capaObjetos:
     serializedVersion: 2
     m_Bits: 64
-  offsetPosicion: {x: 0, y: 0, z: -0.8}
+  offsetPosicion: {x: 0, y: 0, z: 0}
   offsetRotacion: {x: 90, y: 0, z: 0}
 --- !u!114 &-3773054555603864499
 MonoBehaviour:
