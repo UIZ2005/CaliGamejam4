@@ -270,4 +270,8 @@ public class NivelManager : MonoBehaviour
             EmpezarNivel();
         }
     }
+    public void finaljuego()
+    {
+        SceneManager.LoadScene("New Scene");
+    }
 }
