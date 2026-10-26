@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadingManager
   videoPlayer: {fileID: 736017611}
-  escenaJuego: EscenaMecanicas
+  escenaJuego: escenadesarrollo
 --- !u!4 &985333736
 Transform:
   m_ObjectHideFlags: 0
