@@ -7770,7 +7770,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 5c0bc51ca97374e41ba5c4f96671e33d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.09
+  m_Volume: 0.04
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9705,7 +9705,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &631460960
 MonoBehaviour:
@@ -9847,7 +9847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
   energiaMaxima: 100
   energiaActual: 100
-  consumoPorSegundo: 8
+  consumoPorSegundo: 2
   barraEnergia: {fileID: 1923240865}
   rellenoBarra: {fileID: 145250399}
   colorAlto: {r: 0, g: 1, b: 0, a: 1}
@@ -11603,7 +11603,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &708554887
 MonoBehaviour:
@@ -11745,7 +11745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
   energiaMaxima: 100
   energiaActual: 100
-  consumoPorSegundo: 8
+  consumoPorSegundo: 2
   barraEnergia: {fileID: 1921804801}
   rellenoBarra: {fileID: 1113603033}
   colorAlto: {r: 0, g: 1, b: 0, a: 1}
@@ -24379,7 +24379,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 33df27b4b32b755448b1da31e3d60cfe, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -26981,8 +26981,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.041041642, y: 0.12966943, z: 0.09454988}
-  m_Center: {x: 0, y: -0.05819751, z: 0.04630412}
+  m_Size: {x: 0.041041642, y: 0.3683646, z: 0.09454989}
+  m_Center: {x: 0, y: 0.061150007, z: 0.046304133}
 --- !u!1001 &1711154593
 PrefabInstance:
   m_ObjectHideFlags: 0
