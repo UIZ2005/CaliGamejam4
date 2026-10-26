@@ -20543,7 +20543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NivelManager
   niveles:
   - nombre: Nivel 1
-    duracionSegundos: 100
+    duracionSegundos: 300
     metaComidas: 0
     objetosDelNivel:
     - {fileID: 1927149125}
@@ -20555,7 +20555,7 @@ MonoBehaviour:
     - {fileID: 2061179379}
     panelIngredientes: {fileID: 157137911}
   - nombre: Nivel 2
-    duracionSegundos: 100
+    duracionSegundos: 480
     metaComidas: 0
     objetosDelNivel:
     - {fileID: 1472083848}
@@ -20563,7 +20563,7 @@ MonoBehaviour:
     - {fileID: 518880425}
     panelIngredientes: {fileID: 1531390412}
   - nombre: Nivel 3
-    duracionSegundos: 100
+    duracionSegundos: 720
     metaComidas: 0
     objetosDelNivel:
     - {fileID: 1460117520}

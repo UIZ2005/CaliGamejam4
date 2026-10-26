@@ -39,6 +39,7 @@ public class ManejoUI : MonoBehaviour
             {
                 actindex = FindAnyObjectByType<GameManager>().skinSeleccionadaP2;
             }
+            Debug.Log(actindex);
 
         }
         
