@@ -26,6 +26,10 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
     [Header("Interfaz UI")]
     public Text textoRecetaUI;
 
+    [Header("Sonidos")]
+    public AudioSource audioSource;
+    public AudioClip sonidoEntregaMaterial;
+
     private int indiceRecetaActual = 0;
     private int faltaConcreto;
     private int faltaLadrillos;
@@ -46,9 +50,7 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
     void CargarReceta(int indice)
     {
         if (indice == 8)
-        {
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(true);
-        }
 
         if (indice >= listaRecetas.Count)
         {
@@ -114,19 +116,22 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
             recibioMaterial = true;
         }
 
-        if (recibioMaterial) ComprobarProgreso();
+        if (recibioMaterial) 
+        {
+            if (audioSource != null && sonidoEntregaMaterial != null)
+            {
+                audioSource.PlayOneShot(sonidoEntregaMaterial);
+            }
+            ComprobarProgreso();
+        }
     }
 
     void ComprobarProgreso()
     {
         if (faltaConcreto <= 0 && faltaLadrillos <= 0 && faltaCemento <= 0 && faltaMadera <= 0 && faltaAgua <= 0)
-        {
             CargarReceta(indiceRecetaActual + 1);
-        }
         else
-        {
             ActualizarUI();
-        }
     }
 
     void ActualizarUI()
@@ -134,13 +139,11 @@ public class ZonaConstruccionNivel3 : MonoBehaviour
         if (indiceRecetaActual >= listaRecetas.Count) return;
 
         string texto = "<b>" + listaRecetas[indiceRecetaActual].nombreFase + "</b>\n";
-        
         if (faltaConcreto > 0) texto += "- Concreto: " + faltaConcreto + "\n";
         if (faltaLadrillos > 0) texto += "- Ladrillos: " + faltaLadrillos + "\n";
         if (faltaCemento > 0) texto += "- Cemento: " + faltaCemento + "\n";
         if (faltaMadera > 0) texto += "- Madera: " + faltaMadera + "\n";
         if (faltaAgua > 0) texto += "- Agua: " + faltaAgua + "\n"; 
-
         textoRecetaUI.text = texto;
     }
 

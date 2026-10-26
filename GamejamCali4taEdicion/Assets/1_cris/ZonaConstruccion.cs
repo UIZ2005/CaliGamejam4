@@ -26,6 +26,10 @@ public class ZonaConstruccion : MonoBehaviour
     [Header("Interfaz UI")]
     public Text textoRecetaUI;
 
+    [Header("Sonidos")]
+    public AudioSource audioSource; // <-- NUEVO
+    public AudioClip sonidoEntregaMaterial; // <-- NUEVO
+
     private int indiceRecetaActual = 0;
     private int faltaConcreto;
     private int faltaLadrillos;
@@ -46,9 +50,7 @@ public class ZonaConstruccion : MonoBehaviour
     void CargarReceta(int indice)
     {
         if (indice == 2)
-        {
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(true);
-        }
 
         if (indice >= listaRecetas.Count)
         {
@@ -58,7 +60,6 @@ public class ZonaConstruccion : MonoBehaviour
             indiceRecetaActual = indice;
             textoRecetaUI.text = "¡CONSTRUCCIÓN COMPLETADA!";
             
-            // Avisa al NivelManager que la construcción terminó
             if (NivelManager.Instancia != null)
                 NivelManager.Instancia.RegistrarConstruccionCompletada();
                 
@@ -115,7 +116,15 @@ public class ZonaConstruccion : MonoBehaviour
             recibioMaterial = true;
         }
 
-        if (recibioMaterial) ComprobarProgreso();
+        // --- DISPARA EL SONIDO SI RECIBIÓ ALGO ---
+        if (recibioMaterial) 
+        {
+            if (audioSource != null && sonidoEntregaMaterial != null)
+            {
+                audioSource.PlayOneShot(sonidoEntregaMaterial);
+            }
+            ComprobarProgreso();
+        }
     }
 
     void ComprobarProgreso()
@@ -135,17 +144,14 @@ public class ZonaConstruccion : MonoBehaviour
         if (indiceRecetaActual >= listaRecetas.Count) return;
 
         string texto = "<b>" + listaRecetas[indiceRecetaActual].nombreFase + "</b>\n";
-        
         if (faltaConcreto > 0) texto += "- Concreto: " + faltaConcreto + "\n";
         if (faltaLadrillos > 0) texto += "- Ladrillos: " + faltaLadrillos + "\n";
         if (faltaCemento > 0) texto += "- Cemento: " + faltaCemento + "\n";
         if (faltaMadera > 0) texto += "- Madera: " + faltaMadera + "\n";
         if (faltaAgua > 0) texto += "- Agua: " + faltaAgua + "\n"; 
-
         textoRecetaUI.text = texto;
     }
 
-    // Apaga los edificios cuando el NivelManager desactiva esta mesa
     private void OnDisable()
     {
         if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);

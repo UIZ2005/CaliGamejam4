@@ -37,13 +37,19 @@ public class moveplayer : MonoBehaviour
     [Range(0f, 1f)] public float precisionFrente = 0.5f;
 
 
-    //SONIDOS
+    [Header("Sonidos")]
     public AudioSource audioSource;
+    public float distanciaRayoPiso = 1.5f;
+    
+    // Sonido Baldosa (Cocina)
     public AudioClip pasosbaldosa;
     public LayerMask baldosa;
-    public float distanciaRayoPiso = 1.5f;
+    
+    // --- NUEVO: Sonido Pasto (Construcción) ---
+    public AudioClip pasosPasto;
+    public LayerMask capaPasto;
 
-    public AudioSource audioAgarre;   // AudioSource propio 
+    public AudioSource audioAgarre;   
     public AudioClip sonidoAgarre;
 
     public void Awake()
@@ -52,6 +58,7 @@ public class moveplayer : MonoBehaviour
         energia = GetComponent<PlayerEnergy>();
         rb = GetComponent<Rigidbody>();
     }
+    
     private void OnMove(InputValue context)
     {
         if (quieto) return;
@@ -88,8 +95,6 @@ public class moveplayer : MonoBehaviour
             animator.SetBool("run", false);
             energia.SetTrabajando(false);
         }
-
-       
     }
 
     private bool EstaAlFrente(Collider objeto)
@@ -128,6 +133,7 @@ public class moveplayer : MonoBehaviour
             }
         }
     }
+    
     private void OnInteract(InputValue context)
     {
         if (!context.isPressed) return;
@@ -146,7 +152,7 @@ public class moveplayer : MonoBehaviour
             }
         }
 
-            Vector3 puntoCocina = transform.position + transform.forward * distanciaFrente;
+        Vector3 puntoCocina = transform.position + transform.forward * distanciaFrente;
         Estacion estacion = BuscarEstacionCocina(puntoCocina);
 
         if (grabObject != null)
@@ -159,10 +165,7 @@ public class moveplayer : MonoBehaviour
                     grabObject = null;
                     return;
                 }
-                //if (r == ResultadoEstacion.SeQuedaEnMano)
-                    return;
-                
-               
+                return;
             }
 
             grabObject.Interact();
@@ -170,7 +173,6 @@ public class moveplayer : MonoBehaviour
             return;
         }
 
-        // --- PRIORIDAD 1: Buscar objetos sueltos en el piso ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
@@ -179,7 +181,7 @@ public class moveplayer : MonoBehaviour
             if (objeto.TryGetComponent(out GrabObject grabEncontrado))
             {
                 grabObject = grabEncontrado;
-                //correcion del bug que habua en la cocina
+                
                 if (grabEncontrado.TryGetComponent(out ItemCocina _))
                 {
                     grabObject.AgarrarDirecto(puntoAgarrePoder);
@@ -187,15 +189,13 @@ public class moveplayer : MonoBehaviour
                     return;
                 }
 
-
                 grabObject.puntoAgarre = puntoAgarrePoder;
                 grabObject.Interact();
+                SonarAgarre(); 
                 return;
             }
-
         }
 
-        // --- COCINA ---
         if (estacion != null)
         {
             ItemCocina dado = estacion.Entregar(puntoCocina);
@@ -208,7 +208,6 @@ public class moveplayer : MonoBehaviour
             }
         }
 
-        // --- PRIORIDAD 2: Zonas de instanciación ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
@@ -223,12 +222,12 @@ public class moveplayer : MonoBehaviour
                     grabObject = nuevoGrab;
                     grabObject.puntoAgarre = puntoAgarrePoder;
                     grabObject.Interact();
+                    SonarAgarre(); 
                 }
                 return;
             }
         }
 
-        // --- PRIORIDAD 3: Mesa de Madera ---
         foreach (var objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
@@ -257,19 +256,15 @@ public class moveplayer : MonoBehaviour
             Estacion e = c.GetComponentInParent<Estacion>();
             if (e == null) continue;
 
-            // punto del borde de la estación más cercano al juga
             Vector3 borde = c.bounds.ClosestPoint(transform.position);
             Vector3 haciaEstacion = borde - transform.position;
             haciaEstacion.y = 0f;
 
-            //  descartar estaciones lejanas
             if (haciaEstacion.magnitude > alcanceEstacion) continue;
 
-            //  descartar estaciones que no están al frente
             if (haciaEstacion.sqrMagnitude > 0.0001f &&
                 Vector3.Dot(transform.forward, haciaEstacion.normalized) < precisionFrente) continue;
 
-            
             float d = (c.bounds.ClosestPoint(punto) - punto).sqrMagnitude;
             if (d < min)
             {
@@ -287,22 +282,44 @@ public class moveplayer : MonoBehaviour
         bool caminando = !quieto && moveInput != Vector2.zero;
 
         Vector3 origen = transform.position + Vector3.up * 0.5f;
+        
+        // Lanzamos dos rayos invisibles hacia abajo para detectar en qué piso estamos
         bool sobreBaldosa = Physics.Raycast(origen, Vector3.down, distanciaRayoPiso, baldosa, QueryTriggerInteraction.Ignore);
+        bool sobrePasto = Physics.Raycast(origen, Vector3.down, distanciaRayoPiso, capaPasto, QueryTriggerInteraction.Ignore);
 
-        if (caminando && sobreBaldosa)
+        if (caminando)
         {
-            if (!audioSource.isPlaying)
+            if (sobreBaldosa)
             {
-                audioSource.clip = pasosbaldosa;
-                audioSource.loop = true;
-                audioSource.Play();
+                // Solo reproduce si el clip es distinto o si estaba apagado
+                if (audioSource.clip != pasosbaldosa || !audioSource.isPlaying)
+                {
+                    audioSource.clip = pasosbaldosa;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
+            }
+            else if (sobrePasto)
+            {
+                if (audioSource.clip != pasosPasto || !audioSource.isPlaying)
+                {
+                    audioSource.clip = pasosPasto;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                // Si camina pero no está ni en baldosa ni en pasto (ej. saltando o en el aire)
+                if (audioSource.isPlaying) audioSource.Stop();
             }
         }
-        else if (audioSource.isPlaying)
+        else
         {
-            audioSource.Stop();
+            if (audioSource.isPlaying) audioSource.Stop();
         }
     }
+    
     private void FixedUpdate()
     {
         if (quieto) return;
@@ -341,18 +358,20 @@ public class moveplayer : MonoBehaviour
 
         rb.linearVelocity = velocidad;
     }
+    
     public void activarquieto()
     {
         quieto = true;
         moveInput = Vector2.zero;
-
         rb.linearVelocity = Vector3.zero;
     }
+    
     public void desactivarquieto()
     {
         quieto = false;
         moveInput = Vector2.zero;
     }
+    
     public void recuperarVelocidad()
     {
         animator.SetBool("walk", false);
@@ -366,7 +385,6 @@ public class moveplayer : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position + transform.forward * distanciaFrente, radioEstaciones);
 
-        // líneas amarillas = hasta dónde y en qué ángulo alcanza una estación
         Gizmos.color = Color.yellow;
         float angulo = Mathf.Acos(precisionFrente) * Mathf.Rad2Deg;
         Vector3 izq = Quaternion.Euler(0, -angulo, 0) * transform.forward;
@@ -376,7 +394,6 @@ public class moveplayer : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * alcanceEstacion);
     }
 
-    // --- FUNCIONES NUEVAS PARA LA MESA DE MADERA ---
     public bool TieneObjetoAgarrado()
     {
         return grabObject != null;
@@ -386,12 +403,13 @@ public class moveplayer : MonoBehaviour
     {
         if (grabObject != null)
         {
-            grabObject.Interact(); // Suelta si por error tenía algo
+            grabObject.Interact(); 
         }
         
         grabObject = nuevoGrab;
         grabObject.puntoAgarre = puntoAgarrePoder;
         grabObject.Interact();
+        SonarAgarre(); 
     }
 
     private void SonarAgarre()
