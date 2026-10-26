@@ -6,7 +6,7 @@ public class ManejoUI : MonoBehaviour
 {
     private Vector2 interaccion;
     public GameObject[] skins;
-    public GameObject[] skinsPanels;
+    private GameObject[] skinsPanels;
     public bool Pj1 = true;
     private int actindex=0;
     public bool gamestart=false;
@@ -15,25 +15,29 @@ public class ManejoUI : MonoBehaviour
     public bool dialogoActivo=true;
     void Start()
     {
-        gameObject.GetComponent<moveplayer>().activarquieto();
         flujo = FindAnyObjectByType<FlujoTutorial>();
-        if (Pj1)
+
+        if (FindAnyObjectByType<GameManager>() != null)
         {
-            actindex = FindAnyObjectByType<GameManager>().skinSeleccionadaP1;
+            if (Pj1)
+            {
+                actindex = FindAnyObjectByType<GameManager>().skinSeleccionadaP1;
+            }
+            else
+            {
+                actindex = FindAnyObjectByType<GameManager>().skinSeleccionadaP2;
+            }
+
         }
-        else
-        {
-            actindex = FindAnyObjectByType<GameManager>().skinSeleccionadaP1;
-        }
-        Empezarjuego();
-    }
-    private void OnMove(InputValue context)
-    {
         
-        if (!gamestart) { 
-        interaccion = context.Get<Vector2>();
-        cambiarPersonaje(interaccion.x);
-         }
+
+        Debug.Log(actindex);
+
+        if (gamestart)
+        {
+            gameObject.GetComponent<moveplayer>().activarquieto();
+            Empezarjuego();
+        }
     }
     private void OnInteract(InputValue context)
     {
@@ -43,35 +47,6 @@ public class ManejoUI : MonoBehaviour
         }
     }
 
-    public void cambiarPersonaje(float x)
-    {
-        actindex += ((int)x);
-        if (x > 0)
-        {
-            skinsPanels[actindex - 1].SetActive(false);
-            if (actindex > skinsPanels.Length - 1)
-            {
-                actindex = 0;
-            }
-            skinsPanels[actindex].SetActive(true);
-
-
-        }
-        else if (x < 0)
-        {
-            skinsPanels[actindex + 1].SetActive(false);
-            if (actindex < 0)
-            {
-                actindex = skinsPanels.Length-1;
-            }
-            skinsPanels[actindex].SetActive(true);
-        }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void Empezarjuego()
     {
         dialogos = flujo.Dialogos;
