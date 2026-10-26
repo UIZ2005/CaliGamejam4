@@ -15,6 +15,7 @@ public class NivelManager : MonoBehaviour
         public float duracionSegundos = 180f;
         public int metaComidas = 8;
         public GameObject[] objetosDelNivel;
+        public GameObject panelIngredientes;
     }
 
     [SerializeField] private Nivel[] niveles = new Nivel[3];
@@ -42,7 +43,9 @@ public class NivelManager : MonoBehaviour
 
     public int NivelActual => indice + 1;   // 1, 2, 3
     public bool Jugando => jugando;
-    public System.Action<int> OnNivelEmpieza; 
+    public System.Action<int> OnNivelEmpieza;
+
+
 
     private Nivel N => niveles[indice];
 
@@ -193,6 +196,9 @@ public class NivelManager : MonoBehaviour
 
         if (textoMotivoGameOver) textoMotivoGameOver.text = motivo;
         Debug.Log("Perdió: " + motivo);
+        foreach (var n in niveles)
+            if (n.panelIngredientes) n.panelIngredientes.SetActive(false);
+
     }
 
     public void Reintentar()
@@ -250,5 +256,18 @@ public class NivelManager : MonoBehaviour
         }
         if (textoComidas)
             textoComidas.text = $"{comidas}/{N.metaComidas}";
+    }
+
+    public void Siguiente()
+    {
+        if (N.panelIngredientes != null)
+        {
+            if (panelInicioNivel) panelInicioNivel.SetActive(false);
+            N.panelIngredientes.SetActive(true);
+        }
+        else
+        {
+            EmpezarNivel();
+        }
     }
 }
