@@ -110,29 +110,64 @@ public class moveplayer : MonoBehaviour
     }
 
 
+
     private void OnEat(InputValue context)
     {
+        if (!context.isPressed) return;
+
         Collider[] objetosCercanos = Physics.OverlapSphere(
-                transform.position,
-                radioInteraccion,
-                capaAgarre
-            );
-        foreach (var objeto in objetosCercanos)
+            transform.position,
+            radioInteraccion,
+            capaAgarre
+        );
+
+        Eatobject mejorComida = null;
+        GrabObject grabDeLaComida = null;
+        float distanciaMinima = float.MaxValue;
+
+        foreach (Collider objeto in objetosCercanos)
         {
             if (!EstaAlFrente(objeto))
                 continue;
 
-            if (objeto.TryGetComponent(out actionEvent actionevent))
-            {
-                actionevent.enviarAccion();
-            }
+            Eatobject comida = objeto.GetComponent<Eatobject>();
 
-            if (objeto.TryGetComponent(out Eatobject comidaencontrada))
+            if (comida == null)
+                comida = objeto.GetComponentInParent<Eatobject>();
+
+            if (comida == null)
+                continue;
+
+            float distancia = Vector3.Distance(
+                transform.position,
+                objeto.bounds.center
+            );
+
+            if (distancia < distanciaMinima)
             {
-                energia.RecuperarEnergia(comidaencontrada.comer());
+                distanciaMinima = distancia;
+                mejorComida = comida;
+
+                grabDeLaComida = comida.GetComponent<GrabObject>();
+
+                if (grabDeLaComida == null)
+                    grabDeLaComida = comida.GetComponentInParent<GrabObject>();
             }
         }
+
+        if (mejorComida == null)
+            return;
+
+        // Si estamos sosteniendo la misma comida, limpiamos la referencia.
+        if (grabObject != null && grabObject == grabDeLaComida)
+        {
+            grabObject = null;
+        }
+
+        float energiaRecuperada = mejorComida.comer();
+        energia.RecuperarEnergia(energiaRecuperada);
     }
+
 
     private void OnInteract(InputValue context)
     {
@@ -361,6 +396,9 @@ public class moveplayer : MonoBehaviour
 
     public void activarquieto()
     {
+        animator.SetBool("walk", false);
+        animator.SetBool("run", false);
+        energia.SetTrabajando(false);
         quieto = true;
         moveInput = Vector2.zero;
         rb.linearVelocity = Vector3.zero;

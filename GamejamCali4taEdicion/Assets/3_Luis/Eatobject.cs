@@ -6,7 +6,23 @@ public class Eatobject : MonoBehaviour
 
     public float comer()
     {
-        Destroy(gameObject,0.1f);
-        return energiarecuperada;
+        float energia = energiarecuperada;
+
+        // Busca el GrabObject en este objeto o en sus padres.
+        GrabObject objetoAgarrable = GetComponentInParent<GrabObject>();
+
+        if (objetoAgarrable != null)
+        {
+            // Destruye el objeto que contiene GrabObject.
+            Destroy(objetoAgarrable.gameObject);
+        }
+        else
+        {
+            // Si no hay GrabObject en los padres,
+            // destruye solamente este objeto.
+            Destroy(gameObject);
+        }
+
+        return energia;
     }
 }
