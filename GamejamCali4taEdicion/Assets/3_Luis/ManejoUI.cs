@@ -15,7 +15,6 @@ public class ManejoUI : MonoBehaviour
     public bool dialogoActivo=true;
     void Start()
     {
-        gameObject.GetComponent<moveplayer>().activarquieto();
         flujo = FindAnyObjectByType<FlujoTutorial>();
 
         if (FindAnyObjectByType<GameManager>() != null)
@@ -36,6 +35,7 @@ public class ManejoUI : MonoBehaviour
 
         if (gamestart)
         {
+            gameObject.GetComponent<moveplayer>().activarquieto();
             Empezarjuego();
         }
     }
