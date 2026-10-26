@@ -360,8 +360,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7650394467087043634}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3981935, y: 4.2712234e-15, z: -1.8541051e-15, w: 0.9173015}
-  m_LocalPosition: {x: 0, y: 3.0923204, z: -3.9986932}
+  m_LocalRotation: {x: 0.54734874, y: -0.000000045124487, z: 0.000000029512117, w: 0.83690464}
+  m_LocalPosition: {x: 0, y: 8.963248, z: -5.4245834}
   m_LocalScale: {x: 1.5560657, y: 1.3148466, z: 1.2866709}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -645,8 +645,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8679507832304575152}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.39819348, y: 5.07505e-15, z: -3.7058475e-15, w: 0.91730154}
-  m_LocalPosition: {x: 0, y: 3.0923204, z: -3.9986932}
+  m_LocalRotation: {x: 0.5473487, y: -0.000000045124477, z: 0.000000029512112, w: 0.8369047}
+  m_LocalPosition: {x: 0, y: 8.963248, z: -5.4245834}
   m_LocalScale: {x: 1.5560657, y: 1.3148466, z: 1.2866709}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -713,7 +713,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 2.76, z: -2.58}
+  FollowOffset: {x: 0, y: 8, z: -3.5}
 --- !u!114 &1153733490043915906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,8 +877,10 @@ MonoBehaviour:
   pasosbaldosa: {fileID: 8300000, guid: 5236082639430804aa63775ce4a3c37f, type: 3}
   baldosa:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   distanciaRayoPiso: 1.5
+  audioAgarre: {fileID: 0}
+  sonidoAgarre: {fileID: 0}
 --- !u!114 &6827935575063332584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,8 +893,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491decaabc5f2d84395aabea66ad9dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
-  energiaMaxima: 1000
-  energiaActual: 1000
+  energiaMaxima: 100000
+  energiaActual: 100000
   consumoPorSegundo: 2
   barraEnergia: {fileID: 6379461261685447110}
   rellenoBarra: {fileID: 739088531028309352}
