@@ -10,7 +10,7 @@ public class RecetaConstruccionN2
     public int reqLadrillos;
     public int reqCemento;
     public int reqMadera;
-    public int reqAgua; 
+    public int reqAgua;
 }
 
 [RequireComponent(typeof(BoxCollider))]
@@ -18,13 +18,17 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
 {
     [Header("Configuración de Nivel 2")]
     public List<RecetaConstruccionN2> listaRecetas;
-    
+
     [Header("Modelos 3D de la Construcción")]
     public GameObject modeloFaseMedia;
     public GameObject modeloFaseFinal;
 
     [Header("Interfaz UI")]
     public Text textoRecetaUI;
+
+    [Header("Sonidos")]
+    public AudioSource audioSource;
+    public AudioClip sonidoEntregaMaterial;
 
     private int indiceRecetaActual = 0;
     private int faltaConcreto;
@@ -36,19 +40,17 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
     void Start()
     {
         GetComponent<BoxCollider>().isTrigger = true;
-        
+
         if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
         if (modeloFaseFinal != null) modeloFaseFinal.SetActive(false);
 
-        CargarReceta(0); 
+        CargarReceta(0);
     }
 
     void CargarReceta(int indice)
     {
         if (indice == 4)
-        {
             if (modeloFaseMedia != null) modeloFaseMedia.SetActive(true);
-        }
 
         if (indice >= listaRecetas.Count)
         {
@@ -57,10 +59,10 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
 
             indiceRecetaActual = indice;
             textoRecetaUI.text = "¡BARBERÍA COMPLETADA!";
-            
+
             if (NivelManager.Instancia != null)
                 NivelManager.Instancia.RegistrarConstruccionCompletada();
-                
+
             return;
         }
 
@@ -69,7 +71,7 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
         faltaLadrillos = listaRecetas[indice].reqLadrillos;
         faltaCemento = listaRecetas[indice].reqCemento;
         faltaMadera = listaRecetas[indice].reqMadera;
-        faltaAgua = listaRecetas[indice].reqAgua; 
+        faltaAgua = listaRecetas[indice].reqAgua;
 
         ActualizarUI();
     }
@@ -84,7 +86,7 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
         {
             if (cubeta.estaLlena)
             {
-                cubeta.Vaciar(); 
+                cubeta.Vaciar();
                 faltaAgua--;
                 recibioMaterial = true;
             }
@@ -114,19 +116,22 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
             recibioMaterial = true;
         }
 
-        if (recibioMaterial) ComprobarProgreso();
+        if (recibioMaterial)
+        {
+            if (audioSource != null && sonidoEntregaMaterial != null)
+            {
+                audioSource.PlayOneShot(sonidoEntregaMaterial);
+            }
+            ComprobarProgreso();
+        }
     }
 
     void ComprobarProgreso()
     {
         if (faltaConcreto <= 0 && faltaLadrillos <= 0 && faltaCemento <= 0 && faltaMadera <= 0 && faltaAgua <= 0)
-        {
             CargarReceta(indiceRecetaActual + 1);
-        }
         else
-        {
             ActualizarUI();
-        }
     }
 
     void ActualizarUI()
@@ -134,13 +139,11 @@ public class ZonaConstruccionNivel2 : MonoBehaviour
         if (indiceRecetaActual >= listaRecetas.Count) return;
 
         string texto = "<b>" + listaRecetas[indiceRecetaActual].nombreFase + "</b>\n";
-        
         if (faltaConcreto > 0) texto += "- Concreto: " + faltaConcreto + "\n";
         if (faltaLadrillos > 0) texto += "- Ladrillos: " + faltaLadrillos + "\n";
         if (faltaCemento > 0) texto += "- Cemento: " + faltaCemento + "\n";
         if (faltaMadera > 0) texto += "- Madera: " + faltaMadera + "\n";
-        if (faltaAgua > 0) texto += "- Agua: " + faltaAgua + "\n"; 
-
+        if (faltaAgua > 0) texto += "- Agua: " + faltaAgua + "\n";
         textoRecetaUI.text = texto;
     }
 
