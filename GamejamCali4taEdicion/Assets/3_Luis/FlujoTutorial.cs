@@ -10,6 +10,8 @@ public class FlujoTutorial : MonoBehaviour
     private Animator camarator;
     public Animator viejito;
 
+    public GameObject aparicionNpc;
+    public GameObject construccion;
     public GameObject[] acciones;
     public GameObject[] circulos;
     public GameObject[] Botones;
@@ -32,6 +34,9 @@ public class FlujoTutorial : MonoBehaviour
     {
         switch (x)
         {
+            case 0:
+                StartCoroutine(circulosloop());
+                break;
             case 1:
                 StartCoroutine(accion1());
                 //Se activa cuando coje la arepa, lo que hace es desactivar los botones de la arepa y activar el circulo y los botones de la parrilla 
@@ -53,8 +58,12 @@ public class FlujoTutorial : MonoBehaviour
                 StartCoroutine(accion5());
                 break;
             case 6:
-                // se activa cuando contruyen la primera cosa
+                StartCoroutine(accion6());
                 break;
+            case 7:
+                StartCoroutine(accion7());
+                break;
+
         }
     }
     public void activardialogoAccion()
@@ -92,6 +101,7 @@ public class FlujoTutorial : MonoBehaviour
     }
     IEnumerator accion3()
     {
+        aparicionNpc.SetActive(false);
         camaraviejo.SetActive(true);
         Dialogos[2].interact();
         activardialogoAccion();
@@ -117,12 +127,30 @@ public class FlujoTutorial : MonoBehaviour
         camaraviejo.SetActive(true);
         Dialogos[4].interact();
         activardialogoAccion(); //este metodo es para que se pueda interactuar con la F y M en los dialogos 
+        construccion.SetActive(true);
         acciones[4].SetActive(false);
         acciones[5].SetActive(true);
+        Dialogos[5].gameObject.SetActive(true);
+        yield return null;
+    }
+    IEnumerator accion6()
+    {
+        camaraviejo.SetActive(true);
+        Dialogos[5].interact();
+        activardialogoAccion();
+        acciones[5].SetActive(false);
+        Dialogos[6].gameObject.SetActive(true);
         yield return null;
     }
 
-    public void aumentarDialogo()
+    IEnumerator accion7()
+    {
+        camaraviejo.SetActive(true);
+        Dialogos[6].interact();
+        activardialogoAccion();
+        yield return null;
+    }
+        public void aumentarDialogo()
     {
         DiaReprod += 1;
 
@@ -154,12 +182,26 @@ public class FlujoTutorial : MonoBehaviour
                 StartCoroutine(dialogo4finaliza());
                 break;
             case 5:
+                StartCoroutine(dialogo5finaliza());
                 //Dialogo de que deben fabricar los materiales para juntarlos en la casa 
                 break;
             case 6:
+                StartCoroutine(dialogo6finaliza());
                 //dialogo final se acaba, pasa a siguiente escena con los niveles 
                 break;
+            case 7:
+                StartCoroutine(dialogo7finaliza());
+                break;
+            default:
+                //NADA
+                break;
         }
+    }
+    IEnumerator circulosloop()
+    {
+        circulos[4].SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        circulos[4].SetActive(true);
     }
     public void activardialogos()
     {
@@ -187,6 +229,7 @@ public class FlujoTutorial : MonoBehaviour
     IEnumerator dialogo2finaliza()
     {
         //Que le entregue la arepa a el cliente
+        aparicionNpc.SetActive(true);
         camarator.SetInteger("Steps",2);
         camaraviejo.SetActive(false);
         yield return new WaitForSeconds(0.8f);
@@ -215,15 +258,41 @@ public class FlujoTutorial : MonoBehaviour
         camarator.SetInteger("Steps", 4);
         camaraviejo.SetActive(false);
         yield return new WaitForSeconds(0.8f);
-        circulos[3].SetActive(true);
+        circulos[6].SetActive(true);
+        yield return new WaitForSeconds(2.4f);
+        circulos[6].SetActive(false);
+        Botones[3].SetActive(false);
+        activarmovimiento();
+        yield return null;
+    }
+    IEnumerator dialogo5finaliza()
+    {
+        camarator.SetInteger("Steps", 5);
+        camaraviejo.SetActive(false);
+        yield return new WaitForSeconds(0.8f);
+        circulos[4].SetActive(true);
         yield return new WaitForSeconds(1.4f);
-        Botones[3].SetActive(true);
-        circulos[3].SetActive(false);
+        Botones[4].SetActive(true);
+        activarmovimiento();
+        yield return null;
+    }
+    IEnumerator dialogo6finaliza()
+    {
+        camarator.SetInteger("Steps", 6);
+        camaraviejo.SetActive(false);
+        yield return new WaitForSeconds(0.8f);
+        circulos[5].SetActive(true);
+        yield return new WaitForSeconds(1.4f);
+        Botones[5].SetActive(true);
         activarmovimiento();
         yield return null;
     }
 
-
+    IEnumerator dialogo7finaliza()
+    {
+        //Cambio de escena
+        yield return null;
+    }
         private void activarmovimiento()
     {
         foreach (ManejoUI pj in manejouis)

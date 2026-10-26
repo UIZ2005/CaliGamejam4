@@ -8,11 +8,14 @@ public class CambiaPersonaje : MonoBehaviour
 
     [Header("Configuración")]
     [SerializeField] private int startingIndex = 0;
+    public bool pj1 = true;
+    private GameManager gameManager;
 
     private int currentAvatar = 0;
 
     private void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();
         if (avatars == null || avatars.Length == 0)
         {
             Debug.LogWarning(
@@ -76,5 +79,17 @@ public class CambiaPersonaje : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void EnviarAlManager()
+    {
+        if (pj1)
+        {
+            gameManager.skinSeleccionadaP1 = currentAvatar;
+        }
+        else
+        {
+            gameManager.skinSeleccionadaP2 = currentAvatar;
+        }
     }
 }

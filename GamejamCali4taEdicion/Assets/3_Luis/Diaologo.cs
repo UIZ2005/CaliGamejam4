@@ -57,12 +57,7 @@ public class Diaologo : MonoBehaviour
     }
 
     public void startdialogo()
-    {
-        foreach (moveplayer pj in player)
-        {
-            pj.activarquieto();
-        }
-        
+    {      
         didDialagoStart = true;
 
         dialogopanel.SetActive(true);
@@ -71,6 +66,18 @@ public class Diaologo : MonoBehaviour
         LineIndex = 0;
 
         StartCoroutine(ShowLine());
+        try
+        {
+            foreach (moveplayer pj in player)
+            {
+                pj.activarquieto();
+            }
+        }
+        catch
+        {
+
+        }
+        
     }
 
     IEnumerator ShowLine()

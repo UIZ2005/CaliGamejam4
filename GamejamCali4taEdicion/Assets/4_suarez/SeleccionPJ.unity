@@ -1832,6 +1832,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1973500170}
+        m_TargetAssemblyTypeName: CambiaPersonaje, Assembly-CSharp
+        m_MethodName: EnviarAlManager
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1393739101}
+        m_TargetAssemblyTypeName: CambiaPersonaje, Assembly-CSharp
+        m_MethodName: EnviarAlManager
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2007343243}
         m_TargetAssemblyTypeName: MenuPrincipal, Assembly-CSharp
         m_MethodName: Jugar
@@ -2548,6 +2572,52 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &919581332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919581334}
+  - component: {fileID: 919581333}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &919581333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919581332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63332f820574f8c44835befb25f0842d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  skinSeleccionadaP1: 0
+  skinSeleccionadaP2: 0
+--- !u!4 &919581334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919581332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.26163, y: 0.44427, z: 4.58818}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3996,11 +4066,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CambiarPersonaje
   avatars:
-  - {fileID: 1191511407}
-  - {fileID: 1442594063}
   - {fileID: 443736527}
+  - {fileID: 1191511407}
   - {fileID: 231144716}
-  startingIndex: 0
+  - {fileID: 1442594063}
+  startingIndex: 1
+  pj1: 0
 --- !u!4 &1393739102
 Transform:
   m_ObjectHideFlags: 0
@@ -5036,10 +5107,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CambiarPersonaje
   avatars:
   - {fileID: 1111099757}
-  - {fileID: 1404964050}
   - {fileID: 72563406}
+  - {fileID: 1404964050}
   - {fileID: 1030769636}
   startingIndex: 0
+  pj1: 1
 --- !u!4 &1973500171
 Transform:
   m_ObjectHideFlags: 0
@@ -5131,3 +5203,4 @@ SceneRoots:
   - {fileID: 1211375480}
   - {fileID: 733550489}
   - {fileID: 2007343244}
+  - {fileID: 919581334}
