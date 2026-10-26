@@ -23,10 +23,10 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.45
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: b4f152e0498484391a9f0d5a1facf03b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -9304,11 +9304,15 @@ MonoBehaviour:
   alcanceEstacion: 1
   precisionFrente: 0.5
   audioSource: {fileID: 631460969}
+  distanciaRayoPiso: 1.5
   pasosbaldosa: {fileID: 8300000, guid: 3f536888037775046a7290f21738779e, type: 3}
   baldosa:
     serializedVersion: 2
     m_Bits: 0
-  distanciaRayoPiso: 1.5
+  pasosPasto: {fileID: 0}
+  capaPasto:
+    serializedVersion: 2
+    m_Bits: 0
   audioAgarre: {fileID: 0}
   sonidoAgarre: {fileID: 0}
 --- !u!114 &631460961
@@ -11194,11 +11198,15 @@ MonoBehaviour:
   alcanceEstacion: 1
   precisionFrente: 0.5
   audioSource: {fileID: 631460969}
+  distanciaRayoPiso: 1.5
   pasosbaldosa: {fileID: 8300000, guid: 3f536888037775046a7290f21738779e, type: 3}
   baldosa:
     serializedVersion: 2
     m_Bits: 0
-  distanciaRayoPiso: 1.5
+  pasosPasto: {fileID: 0}
+  capaPasto:
+    serializedVersion: 2
+    m_Bits: 0
   audioAgarre: {fileID: 0}
   sonidoAgarre: {fileID: 0}
 --- !u!114 &708554888
@@ -13051,6 +13059,8 @@ MonoBehaviour:
   imagenAnimada: {fileID: 511021696}
   incrementoEscala: 0.3
   velocidadAnimacion: 5
+  audioTrabajo: {fileID: 0}
+  sonidoCortar: {fileID: 0}
 --- !u!65 &787061599
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21894,6 +21904,8 @@ MonoBehaviour:
   modeloFaseMedia: {fileID: 0}
   modeloFaseFinal: {fileID: 0}
   textoRecetaUI: {fileID: 945537006}
+  audioSource: {fileID: 0}
+  sonidoEntregaMaterial: {fileID: 0}
 --- !u!65 &1344319606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23638,6 +23650,10 @@ MonoBehaviour:
   canvasMezcladora: {fileID: 1626220700}
   textoMateriales: {fileID: 428994962}
   barraProgreso: {fileID: 351654192}
+  audioMaquina: {fileID: 0}
+  sonidoTerminar: {fileID: 0}
+  sonidoRecibirMaterial: {fileID: 0}
+  tiempoFadeOut: 0.2
 --- !u!65 &1467332860
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31558,6 +31574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketAgua
   puntoSnap: {fileID: 2082101939}
+  audioGrifo: {fileID: 0}
+  tiempoFadeOut: 0.2
 --- !u!65 &2082101941
 BoxCollider:
   m_ObjectHideFlags: 0
