@@ -152,7 +152,7 @@ public class FlujoTutorial : MonoBehaviour
         Dialogos[5].interact();
         activardialogoAccion();
         acciones[5].SetActive(false);
-        acciones[6].SetActive(true);
+        //acciones[6].SetActive(true);
         Dialogos[6].gameObject.SetActive(true);
         yield return null;
     }
