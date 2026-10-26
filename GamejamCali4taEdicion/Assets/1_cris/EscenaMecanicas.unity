@@ -20544,7 +20544,7 @@ MonoBehaviour:
   niveles:
   - nombre: Nivel 1
     duracionSegundos: 300
-    metaComidas: 0
+    metaComidas: 5
     objetosDelNivel:
     - {fileID: 1927149125}
     - {fileID: 496408368}
@@ -20556,7 +20556,7 @@ MonoBehaviour:
     panelIngredientes: {fileID: 157137911}
   - nombre: Nivel 2
     duracionSegundos: 480
-    metaComidas: 0
+    metaComidas: 8
     objetosDelNivel:
     - {fileID: 1472083848}
     - {fileID: 148670380}
@@ -20564,7 +20564,7 @@ MonoBehaviour:
     panelIngredientes: {fileID: 1531390412}
   - nombre: Nivel 3
     duracionSegundos: 720
-    metaComidas: 0
+    metaComidas: 12
     objetosDelNivel:
     - {fileID: 1460117520}
     - {fileID: 347032645}
