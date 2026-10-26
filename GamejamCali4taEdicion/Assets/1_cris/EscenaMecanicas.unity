@@ -12362,6 +12362,8 @@ MonoBehaviour:
   imagenAnimada: {fileID: 2015561801}
   incrementoEscala: 0.3
   velocidadAnimacion: 5
+  audioTrabajo: {fileID: 0}
+  sonidoCortar: {fileID: 0}
 --- !u!1001 &440642511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15091,7 +15093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &632291986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15180,7 +15182,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: -2
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -16832,6 +16834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketAgua
   puntoSnap: {fileID: 759123674}
+  audioGrifo: {fileID: 0}
+  tiempoFadeOut: 0.2
 --- !u!65 &759123671
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30770,6 +30774,8 @@ MonoBehaviour:
   modeloFaseMedia: {fileID: 2053180653}
   modeloFaseFinal: {fileID: 2098254215}
   textoRecetaUI: {fileID: 295090426}
+  audioSource: {fileID: 0}
+  sonidoEntregaMaterial: {fileID: 0}
 --- !u!65 &1460117522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31018,6 +31024,8 @@ MonoBehaviour:
   modeloFaseMedia: {fileID: 2053180653}
   modeloFaseFinal: {fileID: 1078517694}
   textoRecetaUI: {fileID: 290042118}
+  audioSource: {fileID: 0}
+  sonidoEntregaMaterial: {fileID: 0}
 --- !u!65 &1472083850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33596,6 +33604,10 @@ MonoBehaviour:
   canvasMezcladora: {fileID: 1837549262}
   textoMateriales: {fileID: 1391943858}
   barraProgreso: {fileID: 605146216}
+  audioMaquina: {fileID: 0}
+  sonidoTerminar: {fileID: 0}
+  sonidoRecibirMaterial: {fileID: 0}
+  tiempoFadeOut: 0.2
 --- !u!65 &1692805767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52185,6 +52197,8 @@ MonoBehaviour:
   modeloFaseMedia: {fileID: 2053180653}
   modeloFaseFinal: {fileID: 503754917}
   textoRecetaUI: {fileID: 808634166}
+  audioSource: {fileID: 0}
+  sonidoEntregaMaterial: {fileID: 0}
 --- !u!65 &1927149127
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57097,7 +57111,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 759
+    m_Bits: 1783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -57651,7 +57665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
   energiaMaxima: 100
   energiaActual: 100
-  consumoPorSegundo: 8
+  consumoPorSegundo: 2
   barraEnergia: {fileID: 4575301944077310801}
   rellenoBarra: {fileID: 698016159726675095}
   colorAlto: {r: 0, g: 1, b: 0, a: 1}
@@ -57741,7 +57755,7 @@ Transform:
   m_GameObject: {fileID: 4801431835821698468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.1, y: 0.636, z: -0.07}
+  m_LocalPosition: {x: -7.1, y: 0.532, z: -0.07}
   m_LocalScale: {x: 0.6426464, y: 0.89253366, z: 0.6452108}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57781,11 +57795,15 @@ MonoBehaviour:
   alcanceEstacion: 0.81
   precisionFrente: 0.85
   audioSource: {fileID: 7291836774539180376}
+  distanciaRayoPiso: 1.5
   pasosbaldosa: {fileID: 8300000, guid: 5236082639430804aa63775ce4a3c37f, type: 3}
   baldosa:
     serializedVersion: 2
     m_Bits: 1024
-  distanciaRayoPiso: 1.5
+  pasosPasto: {fileID: 0}
+  capaPasto:
+    serializedVersion: 2
+    m_Bits: 0
   audioAgarre: {fileID: 533433293}
   sonidoAgarre: {fileID: 8300000, guid: 373660f15c5cbc24fa4ccb5dce839cd2, type: 3}
 --- !u!136 &2104055382898486073
@@ -57889,15 +57907,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58959,15 +58977,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 587a57a12f996f14185c86484f333e7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -59221,15 +59239,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalPosition.x
@@ -59537,8 +59555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491decaabc5f2d84395aabea66ad9dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergy
-  energiaMaxima: 100000
-  energiaActual: 100000
+  energiaMaxima: 100
+  energiaActual: 100
   consumoPorSegundo: 2
   barraEnergia: {fileID: 7213463123184145174}
   rellenoBarra: {fileID: 3950498343958151096}
@@ -59793,15 +59811,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc9d3737c95b7ad4797dd966e03c5288, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60108,11 +60126,15 @@ MonoBehaviour:
   alcanceEstacion: 0.81
   precisionFrente: 0.85
   audioSource: {fileID: 7291836774539180376}
+  distanciaRayoPiso: 1.5
   pasosbaldosa: {fileID: 8300000, guid: 5236082639430804aa63775ce4a3c37f, type: 3}
   baldosa:
     serializedVersion: 2
     m_Bits: 1024
-  distanciaRayoPiso: 1.5
+  pasosPasto: {fileID: 0}
+  capaPasto:
+    serializedVersion: 2
+    m_Bits: 0
   audioAgarre: {fileID: 533433293}
   sonidoAgarre: {fileID: 8300000, guid: 373660f15c5cbc24fa4ccb5dce839cd2, type: 3}
 --- !u!4 &7703765654883588486
@@ -60144,6 +60166,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CamaraSeguirPosicion
   jugador: {fileID: 4775790799971131526}
   offset: {x: 0, y: 8, z: 0}
+  alturaNormal: 8
+  alturaBaldosa: 6
+  velocidadCambio: 5
+  distanciaSuelo: 2
+  layerBaldosa:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!224 &7704119818811772707
 RectTransform:
   m_ObjectHideFlags: 0
@@ -60203,7 +60232,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 503
+    m_Bits: 1527
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -60409,6 +60438,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CamaraSeguirPosicion
   jugador: {fileID: 1902056626257422706}
   offset: {x: 0, y: 8, z: 0}
+  alturaNormal: 8
+  alturaBaldosa: 6
+  velocidadCambio: 5
+  distanciaSuelo: 2
+  layerBaldosa:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &8482420546574113299
 MonoBehaviour:
   m_ObjectHideFlags: 0

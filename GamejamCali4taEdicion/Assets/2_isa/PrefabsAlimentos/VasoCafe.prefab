@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7702636658623368163}
   - component: {fileID: 1361334266370889663}
   - component: {fileID: 3974144011144089912}
+  - component: {fileID: 7337803137550207835}
   m_Layer: 6
   m_Name: VasoCafe
   m_TagString: Untagged
@@ -151,10 +152,25 @@ MonoBehaviour:
   estadoInicial: 1
   puntoComida: {fileID: 0}
   comidasAceptadas: 
+  sancochoVacio: {fileID: 0}
+  sancochLleno: {fileID: 0}
   visualCrudo: {fileID: 0}
   visualListo: {fileID: 0}
   visualQuemado: {fileID: 0}
   colorQuemado: {r: 0.08, g: 0.06, b: 0.05, a: 1}
+--- !u!114 &7337803137550207835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8644815945624684950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a767298156a77ae44a06f11a25d0e596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Eatobject
+  energiarecuperada: 25
 --- !u!1001 &475467282685549677
 PrefabInstance:
   m_ObjectHideFlags: 0

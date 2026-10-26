@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FlujoTutorial : MonoBehaviour
 {
@@ -139,6 +140,7 @@ public class FlujoTutorial : MonoBehaviour
         Dialogos[5].interact();
         activardialogoAccion();
         acciones[5].SetActive(false);
+        acciones[6].SetActive(true);
         Dialogos[6].gameObject.SetActive(true);
         yield return null;
     }
@@ -291,6 +293,7 @@ public class FlujoTutorial : MonoBehaviour
     IEnumerator dialogo7finaliza()
     {
         //Cambio de escena
+        SceneManager.LoadScene("EscenaMecanicas");
         yield return null;
     }
         private void activarmovimiento()

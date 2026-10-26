@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 4890707333900242540}
   - component: {fileID: 3965166505044763676}
   - component: {fileID: 2980787514035339226}
+  - component: {fileID: 6322431549056770381}
   m_Layer: 6
   m_Name: VasoLimonada
   m_TagString: Untagged
@@ -306,6 +307,19 @@ MonoBehaviour:
   visualListo: {fileID: 0}
   visualQuemado: {fileID: 0}
   colorQuemado: {r: 0.08, g: 0.06, b: 0.05, a: 1}
+--- !u!114 &6322431549056770381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477731374970169418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a767298156a77ae44a06f11a25d0e596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Eatobject
+  energiarecuperada: 25
 --- !u!1 &6124723923786414567
 GameObject:
   m_ObjectHideFlags: 0
