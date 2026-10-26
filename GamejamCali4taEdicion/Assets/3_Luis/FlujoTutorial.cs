@@ -18,12 +18,15 @@ public class FlujoTutorial : MonoBehaviour
     public GameObject[] Botones;
     public Diaologo[] Dialogos;
 
+    private ZonaConstruccion mesa;
 
     public ManejoUI[] manejouis;
     private AudioManager audio;
+    private bool one=true;
 
     void Start()
     {
+        mesa = FindAnyObjectByType<ZonaConstruccion>();
         audio = FindAnyObjectByType<AudioManager>();
         camarator = camaraanim.GetComponent<Animator>();
         
@@ -32,7 +35,11 @@ public class FlujoTutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (mesa.completado && one)
+        {
+            one = false;
+            ActivarAccion(7);
+        }
     }
     public void ActivarAccion(int x)
     {
@@ -289,9 +296,9 @@ public class FlujoTutorial : MonoBehaviour
         camarator.SetInteger("Steps", 6);
         camaraviejo.SetActive(false);
         yield return new WaitForSeconds(0.8f);
-        circulos[5].SetActive(true);
+        circulos[6].SetActive(true);
         yield return new WaitForSeconds(1.4f);
-        Botones[5].SetActive(true);
+        Botones[6].SetActive(true);
         activarmovimiento();
         yield return null;
     }

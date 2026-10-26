@@ -36,6 +36,7 @@ public class ZonaConstruccion : MonoBehaviour
     private int faltaCemento;
     private int faltaMadera;
     private int faltaAgua;
+    public bool completado;
 
     void Start()
     {
@@ -43,7 +44,7 @@ public class ZonaConstruccion : MonoBehaviour
 
         if (modeloFaseMedia != null) modeloFaseMedia.SetActive(false);
         if (modeloFaseFinal != null) modeloFaseFinal.SetActive(false);
-
+        completado = false;
         CargarReceta(0);
     }
 
@@ -59,6 +60,7 @@ public class ZonaConstruccion : MonoBehaviour
 
             indiceRecetaActual = indice;
             textoRecetaUI.text = "¡CONSTRUCCIÓN COMPLETADA!";
+            completado = true;
 
             if (NivelManager.Instancia != null)
                 NivelManager.Instancia.RegistrarConstruccionCompletada();
