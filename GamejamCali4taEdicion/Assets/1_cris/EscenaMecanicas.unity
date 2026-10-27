@@ -1723,7 +1723,7 @@ Transform:
   m_GameObject: {fileID: 144854598}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14138001, y: -0.65000004, z: -3.1183}
+  m_LocalPosition: {x: -0.14138001, y: -0.7, z: -3.1183}
   m_LocalScale: {x: 4.949906, y: 0.11972383, z: 6.771962}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21763,6 +21763,7 @@ MonoBehaviour:
     panelesAntesDeEmpezar:
     - {fileID: 157137911}
     - {fileID: 476639397}
+    musicaFondo: {fileID: 8300000, guid: 5c0bc51ca97374e41ba5c4f96671e33d, type: 3}
   - nombre: Nivel 2
     duracionSegundos: 480
     metaComidas: 8
@@ -21779,6 +21780,7 @@ MonoBehaviour:
     panelesAntesDeEmpezar:
     - {fileID: 1531390412}
     - {fileID: 1245219657}
+    musicaFondo: {fileID: 8300000, guid: fdda8bb992a796d42900ee463937d287, type: 3}
   - nombre: Nivel 3
     duracionSegundos: 720
     metaComidas: 11
@@ -21793,6 +21795,7 @@ MonoBehaviour:
     - {fileID: 1983267067}
     panelesAntesDeEmpezar:
     - {fileID: 543118551}
+    musicaFondo: {fileID: 8300000, guid: a4744be6973b84246be41bf85252ba08, type: 3}
   nivelInicial: 1
   textoTiempo: {fileID: 699817187}
   textoComidas: {fileID: 225167240}
@@ -21801,6 +21804,7 @@ MonoBehaviour:
   panelGameOver: {fileID: 1649107015}
   textoMotivoGameOver: {fileID: 0}
   panelVictoria: {fileID: 293507538}
+  musicaFondo: {fileID: 1465080266}
 --- !u!4 &1079931854
 Transform:
   m_ObjectHideFlags: 0
@@ -30404,12 +30408,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5233942776131685814, guid: 10773502934e9f94598f9ea396316527, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233942776131685814, guid: 10773502934e9f94598f9ea396316527, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.077
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233942776131685814, guid: 10773502934e9f94598f9ea396316527, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.094
+      objectReference: {fileID: 0}
     - target: {fileID: 7564669183114908233, guid: 10773502934e9f94598f9ea396316527, type: 3}
       propertyPath: m_Name
       value: DispensadorPlatosPlanos
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 502473925641182584, guid: 10773502934e9f94598f9ea396316527, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10773502934e9f94598f9ea396316527, type: 3}
@@ -33279,7 +33296,7 @@ MonoBehaviour:
     reqMadera: 0
     reqAgua: 0
   - nombreFase: "Aguja G\xF3tica"
-    reqConcreto: 2
+    reqConcreto: 1
     reqLadrillos: 0
     reqCemento: 0
     reqMadera: 1
@@ -33441,11 +33458,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5c0bc51ca97374e41ba5c4f96671e33d, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.06
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -48857,7 +48874,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837549262}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 5.06}
+  m_LocalPosition: {x: 0, y: 0, z: 4.88}
   m_LocalScale: {x: 0.00037784554, y: 0.00037784563, z: 0.0005256983}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -62632,7 +62649,7 @@ RectTransform:
   m_GameObject: {fileID: 1701373827005741601}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4742, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9187694842480118386}
@@ -63238,9 +63255,9 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5306067771934779230}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.00071716, y: 0.00071716, z: 0.00071716}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0.06}
+  m_LocalScale: {x: 0.0008486872, y: 0.0015129924, z: 0.00071716}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6137826309313198721}
   m_Father: {fileID: 4775790799971131526}
@@ -63248,7 +63265,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.22}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1920, y: 495.0063}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7084878479308753976
 MonoBehaviour:

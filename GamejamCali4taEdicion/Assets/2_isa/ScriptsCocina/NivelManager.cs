@@ -19,6 +19,8 @@ public class NivelManager : MonoBehaviour
         // NUEVO: paneles que salen EN ORDEN después del panel de inicio y antes de empezar.
         // Nivel 1 y 2: [ingredientes, construcción]. Nivel 3: [un solo panel]. Vacío = empieza directo.
         public GameObject[] panelesAntesDeEmpezar;
+
+        public AudioClip musicaFondo;
     }
 
     [SerializeField] private Nivel[] niveles = new Nivel[3];
@@ -35,6 +37,9 @@ public class NivelManager : MonoBehaviour
     public Text textoMotivoGameOver;
     public GameObject panelVictoria;
 
+    public AudioSource musicaFondo;
+
+
     private int indice;
     private float tiempoRestante;
     private int comidas;
@@ -49,6 +54,8 @@ public class NivelManager : MonoBehaviour
     public bool Jugando => jugando;
     public System.Action<int> OnNivelEmpieza;
 
+
+    
 
 
     private Nivel N => niveles[indice];
@@ -128,6 +135,13 @@ public class NivelManager : MonoBehaviour
         ActualizarUI();
         OnNivelEmpieza?.Invoke(NivelActual);
         Debug.Log($"Empieza {N.nombre}");
+
+        if (musicaFondo && N.musicaFondo && musicaFondo.clip != N.musicaFondo)
+        {
+            musicaFondo.clip = N.musicaFondo;
+            musicaFondo.loop = true;
+            musicaFondo.Play();
+        }
     }
 
     // --- NUEVAS FUNCIONES PARA LA ESPERA DE 2 SEGUNDOS ---
