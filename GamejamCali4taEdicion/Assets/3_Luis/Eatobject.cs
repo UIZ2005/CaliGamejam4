@@ -3,7 +3,7 @@ using UnityEngine;
 public class Eatobject : MonoBehaviour
 {
     public float energiarecuperada;
-
+    public bool istutorial = false;
     public float comer()
     {
         float energia = energiarecuperada;
@@ -20,6 +20,11 @@ public class Eatobject : MonoBehaviour
         {
             // Si no hay GrabObject en los padres,
             // destruye solamente este objeto.
+            if (istutorial)
+            {
+                FlujoTutorial flujo = FindAnyObjectByType<FlujoTutorial>();
+                flujo.ActivarAccion(4);
+            }
             Destroy(gameObject);
         }
 

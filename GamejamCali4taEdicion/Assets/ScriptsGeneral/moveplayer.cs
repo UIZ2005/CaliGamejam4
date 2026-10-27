@@ -114,6 +114,7 @@ public class moveplayer : MonoBehaviour
 
     private void OnEat(InputValue context)
     {
+        if (quieto) return;
         if (!context.isPressed) return;
 
         Collider[] objetosCercanos = Physics.OverlapSphere(
@@ -178,6 +179,7 @@ public class moveplayer : MonoBehaviour
 
     private void OnInteract(InputValue context)
     {
+        if (quieto) return;
         if (!context.isPressed) return;
         Collider[] objetosCercanos = Physics.OverlapSphere(
             transform.position,

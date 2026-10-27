@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -89,6 +90,8 @@ public class FlujoTutorial : MonoBehaviour
 
     IEnumerator accion1()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         camarator.SetInteger("Steps", 1);
         Dialogos[1].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.8f);
@@ -99,44 +102,53 @@ public class FlujoTutorial : MonoBehaviour
         circulos[1].SetActive(false);
         acciones[1].SetActive(true);
         acciones[0].SetActive(false);
+        activarmovimiento();
         yield return null;
     }
     IEnumerator accion2()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         camaraviejo.SetActive(true);
         Dialogos[1].interact();
         activardialogoAccion();
         Botones[1].SetActive(false);
-        acciones[2].SetActive(true);
+        //acciones[2].SetActive(true);
         acciones[1].SetActive(false);
         Dialogos[2].gameObject.SetActive(true);
         yield return null;
     }
     IEnumerator accion3()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         aparicionNpc.SetActive(false);
         camaraviejo.SetActive(true);
         Dialogos[2].interact();
         activardialogoAccion();
         Botones[2].SetActive(false);
-        acciones[2].SetActive(false);
+        //acciones[2].SetActive(false);
         acciones[3].SetActive(true);
         Dialogos[3].gameObject.SetActive(true);
         yield return null;
     }
     IEnumerator accion4()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         camaraviejo.SetActive(true);
         Dialogos[3].interact();
         activardialogoAccion(); //este metodo es para que se pueda interactuar con la F y M en los dialogos 
         Botones[3].SetActive(false);
-        acciones[3].SetActive(false);
+        //acciones[3].SetActive(false);
         acciones[4].SetActive(true);
         Dialogos[4].gameObject.SetActive(true);
         yield return null;
     }
     IEnumerator accion5()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         camaraviejo.SetActive(true);
         Dialogos[4].interact();
         activardialogoAccion(); //este metodo es para que se pueda interactuar con la F y M en los dialogos 
@@ -148,6 +160,8 @@ public class FlujoTutorial : MonoBehaviour
     }
     IEnumerator accion6()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         camaraviejo.SetActive(true);
         Dialogos[5].interact();
         activardialogoAccion();
@@ -159,6 +173,8 @@ public class FlujoTutorial : MonoBehaviour
 
     IEnumerator accion7()
     {
+        desactivarmovimiento();
+        yield return new WaitForSeconds(0.5f);
         camaraviejo.SetActive(true);
         Dialogos[6].interact();
         activardialogoAccion();
@@ -309,11 +325,18 @@ public class FlujoTutorial : MonoBehaviour
         SceneManager.LoadScene("EscenaMecanicas");
         yield return null;
     }
-        private void activarmovimiento()
+    private void activarmovimiento()
     {
         foreach (ManejoUI pj in manejouis)
         {
             pj.gameObject.GetComponent<moveplayer>().desactivarquieto();
+        }
+    }
+    private void desactivarmovimiento()
+    {
+        foreach (ManejoUI pj in manejouis)
+        {
+            pj.gameObject.GetComponent<moveplayer>().activarquieto();
         }
     }
 }

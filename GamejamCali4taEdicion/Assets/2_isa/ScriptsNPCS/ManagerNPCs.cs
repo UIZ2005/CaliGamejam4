@@ -4,7 +4,8 @@ using UnityEngine;
 public class ManagerNPCs : MonoBehaviour
 {
     public static ManagerNPCs Instancia { get; private set; }
-
+    public bool istutorial = false;
+    private FlujoTutorial flujo;
     [System.Serializable]
     public class MenuNivel
     {
@@ -58,6 +59,7 @@ public class ManagerNPCs : MonoBehaviour
 
     private void Start()
     {
+        flujo = FindAnyObjectByType<FlujoTutorial>();
         if (NivelManager.Instancia != null)
             NivelManager.Instancia.OnNivelEmpieza += Limpiar;
     }
@@ -98,6 +100,11 @@ public class ManagerNPCs : MonoBehaviour
                 if (NivelManager.Instancia != null)
                     NivelManager.Instancia.RegistrarComida(tipo);
 
+                if (istutorial)
+                {
+                    flujo.ActivarAccion(3);
+                    gameObject.SetActive(false);
+                }
                 Debug.Log($"{npc.name} quedó servido y se va");
             }
             return true;
