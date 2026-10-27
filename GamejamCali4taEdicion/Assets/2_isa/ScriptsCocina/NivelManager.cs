@@ -15,12 +15,15 @@ public class NivelManager : MonoBehaviour
         public float duracionSegundos = 180f;
         public int metaComidas = 8;
         public GameObject[] objetosDelNivel;
-        public GameObject panelIngredientes;
+
+        // NUEVO: paneles que salen EN ORDEN después del panel de inicio y antes de empezar.
+        // Nivel 1 y 2: [ingredientes, construcción]. Nivel 3: [un solo panel]. Vacío = empieza directo.
+        public GameObject[] panelesAntesDeEmpezar;
     }
 
     [SerializeField] private Nivel[] niveles = new Nivel[3];
     [SerializeField] private int nivelInicial = 1;
-    [SerializeField] private bool terminarAlCumplirMetas = false;
+    // NUEVO: se quitó "terminarAlCumplirMetas". Ahora el nivel SIEMPRE termina apenas se cumplen las metas.
 
     [SerializeField] private Text textoTiempo;
     [SerializeField] private Text textoComidas;
@@ -32,14 +35,15 @@ public class NivelManager : MonoBehaviour
     public Text textoMotivoGameOver;
     public GameObject panelVictoria;
 
-    private int indice;              
+    private int indice;
     private float tiempoRestante;
     private int comidas;
     private bool jugando;
-    
+
     // Variables de control de estado
     private bool construccionCompletada;
     private bool enTransicion; // Nueva variable para saber si estamos esperando los 2 segundos
+    private int pasoPanel = -1; // NUEVO: -1 = panel de inicio; 0, 1... = panel de la lista que se está mostrando
 
     public int NivelActual => indice + 1;   // 1, 2, 3
     public bool Jugando => jugando;
@@ -65,13 +69,13 @@ public class NivelManager : MonoBehaviour
         if (!jugando) return;
 
         tiempoRestante -= Time.deltaTime;
-        
+
         // ¿Qué pasa si el reloj llega a 0?
         if (tiempoRestante <= 0f)
         {
             tiempoRestante = 0f;
             ActualizarUI();
-            
+
             // Verificamos si en el último milisegundo alcanzaron a cumplir las metas
             if (MetasCumplidas())
             {
@@ -86,7 +90,8 @@ public class NivelManager : MonoBehaviour
 
         ActualizarUI();
 
-        if (terminarAlCumplirMetas && MetasCumplidas())
+        // NUEVO: si ya cumplieron comidas y construcción, termina aunque sobre tiempo
+        if (MetasCumplidas())
         {
             IniciarTransicionVictoria();
         }
@@ -96,7 +101,8 @@ public class NivelManager : MonoBehaviour
     {
         indice = i;
         jugando = false;
-        Time.timeScale = 0f; 
+        Time.timeScale = 0f;
+        pasoPanel = -1; // NUEVO: arranca en el panel de inicio
 
         OcultarPaneles();
         ActivarObjetosDelNivel(i);
@@ -109,7 +115,7 @@ public class NivelManager : MonoBehaviour
     {
         tiempoRestante = N.duracionSegundos;
         comidas = 0;
-        
+
         construccionCompletada = false;
         enTransicion = false; // Reiniciamos el estado de transición
 
@@ -129,10 +135,10 @@ public class NivelManager : MonoBehaviour
     {
         if (enTransicion) return; // Evita que se llame varias veces
         enTransicion = true;
-        
+
         // ¡CRÍTICO! Al poner jugando en false, el Update detiene el cronómetro inmediatamente
-        jugando = false; 
-        
+        jugando = false;
+
         // Iniciamos la cuenta regresiva de 2 segundos en segundo plano
         StartCoroutine(RutinaVictoria());
     }
@@ -141,7 +147,7 @@ public class NivelManager : MonoBehaviour
     {
         // Espera exactamente 2 segundos sin pausar el juego para que se vean las animaciones
         yield return new WaitForSeconds(2f);
-        
+
         // Después de 2 segundos, lanza la siguiente pantalla
         TerminarNivel();
     }
@@ -189,16 +195,13 @@ public class NivelManager : MonoBehaviour
         if (panelGameOver) panelGameOver.SetActive(true);
 
         string motivo = "";
-        if (comidas < N.metaComidas) 
+        if (comidas < N.metaComidas)
             motivo += $"Faltaron {N.metaComidas - comidas} personas por atender.\n";
-        if (!construccionCompletada) 
+        if (!construccionCompletada)
             motivo += "La construcción no se terminó a tiempo.";
 
         if (textoMotivoGameOver) textoMotivoGameOver.text = motivo;
         Debug.Log("Perdió: " + motivo);
-        foreach (var n in niveles)
-            if (n.panelIngredientes) n.panelIngredientes.SetActive(false);
-
     }
 
     public void Reintentar()
@@ -212,17 +215,17 @@ public class NivelManager : MonoBehaviour
         if (!jugando) return;
         comidas++;
         Debug.Log($"Comedor: entregado {tipo}. {comidas}/{N.metaComidas}");
-        
-        if (terminarAlCumplirMetas && MetasCumplidas()) IniciarTransicionVictoria();
+
+        if (MetasCumplidas()) IniciarTransicionVictoria(); // NUEVO: sin esperar al tiempo
     }
-    
+
     public void RegistrarConstruccionCompletada()
     {
         if (!jugando) return;
         construccionCompletada = true;
         Debug.Log($"Construcción completada para el nivel {NivelActual}");
-        
-        if (terminarAlCumplirMetas && MetasCumplidas()) IniciarTransicionVictoria();
+
+        if (MetasCumplidas()) IniciarTransicionVictoria(); // NUEVO: sin esperar al tiempo
     }
 
     private bool MetasCumplidas()
@@ -245,6 +248,12 @@ public class NivelManager : MonoBehaviour
         if (panelInicioNivel) panelInicioNivel.SetActive(false);
         if (panelGameOver) panelGameOver.SetActive(false);
         if (panelVictoria) panelVictoria.SetActive(false);
+
+        // NUEVO: apaga los paneles previos (ingredientes, construcción...) de todos los niveles
+        foreach (var n in niveles)
+            if (n.panelesAntesDeEmpezar != null)
+                foreach (var p in n.panelesAntesDeEmpezar)
+                    if (p) p.SetActive(false);
     }
 
     private void ActualizarUI()
@@ -258,17 +267,31 @@ public class NivelManager : MonoBehaviour
             textoComidas.text = $"{comidas}/{N.metaComidas}";
     }
 
+    // NUEVO: TODOS los botones (panel de inicio y cada panel de la lista) llaman a Siguiente().
+    // Va mostrando los paneles en orden y, después del último, empieza el nivel.
     public void Siguiente()
     {
-        if (N.panelIngredientes != null)
+        GameObject[] paneles = N.panelesAntesDeEmpezar;
+
+        // apaga el panel que se está viendo
+        if (pasoPanel < 0)
         {
             if (panelInicioNivel) panelInicioNivel.SetActive(false);
-            N.panelIngredientes.SetActive(true);
         }
-        else
+        else if (paneles != null && pasoPanel < paneles.Length && paneles[pasoPanel])
         {
-            EmpezarNivel();
+            paneles[pasoPanel].SetActive(false);
         }
+
+        // pasa al siguiente (saltando espacios vacíos de la lista)
+        pasoPanel++;
+        while (paneles != null && pasoPanel < paneles.Length && paneles[pasoPanel] == null)
+            pasoPanel++;
+
+        if (paneles != null && pasoPanel < paneles.Length)
+            paneles[pasoPanel].SetActive(true);   // muestra el siguiente panel
+        else
+            EmpezarNivel();                        // ya no hay más paneles: empieza el nivel
     }
     public void finaljuego()
     {
