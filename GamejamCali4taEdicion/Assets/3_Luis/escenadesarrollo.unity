@@ -9932,7 +9932,7 @@ MonoBehaviour:
   consumoPorSegundo: 2
   barraEnergia: {fileID: 1923240865}
   rellenoBarra: {fileID: 145250399}
-  colorAlto: {r: 0, g: 1, b: 0, a: 1}
+  colorAlto: {r: 0.10291912, g: 0.6610937, b: 0.9245283, a: 1}
   colorMedio: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   colorBajo: {r: 1, g: 0, b: 0, a: 1}
 --- !u!82 &631460969
@@ -11898,7 +11898,7 @@ MonoBehaviour:
   consumoPorSegundo: 2
   barraEnergia: {fileID: 1921804801}
   rellenoBarra: {fileID: 1113603033}
-  colorAlto: {r: 0, g: 1, b: 0, a: 1}
+  colorAlto: {r: 0.101960786, g: 0.6627451, b: 0.9254902, a: 1}
   colorMedio: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   colorBajo: {r: 1, g: 0, b: 0, a: 1}
 --- !u!82 &708554896
@@ -12147,7 +12147,8 @@ MonoBehaviour:
   lineasDialogo:
   - Muy bien, muchachos! Ya le estamos poniendo el hombro al barrio
   - "Pero, ojo, que ustedes tambi\xE9n necesitan comer. La comida que preparen se
-    la pueden comer ustedes mismos pa' recuperar energ\xEDas y seguir trabajando"
+    la pueden comer ustedes mismos pa' recuperar energ\xEDas y subir su barra, para
+    continuar trabajando"
   typingtext: 0.05
 --- !u!1 &718474313
 GameObject:
@@ -17777,8 +17778,8 @@ MonoBehaviour:
   texto: {fileID: 1416526022}
   lineasDialogo:
   - Esos materiales los pueden fabricar en los puestos que tienen alrededor.
-  - Empezaremos creando un cimiento basico, para ello llena el cubo con agua y utiliza
-    la mezcladora para integrar el cemento con el agua
+  - "Empezaremos creando un cimiento b\xE1sico, para ello llena el cubo con agua
+    y utiliza la mezcladora para integrar el cemento con el agua"
   typingtext: 0.05
 --- !u!1 &1039533051
 GameObject:
@@ -21975,7 +21976,7 @@ MonoBehaviour:
     casa se nos vino abajo y el barrio necesita una mano"
   - "Pero tranquilos, que aqu\xED nadie se vara. Uno cocina y el otro mete ladrillo.
     \xA1Entre los dos sacamos esto adelante"
-  - "p\xF3ngase las pilas!, vayan y cogan unas arepas para azarlas, y cuidado que
+  - "p\xF3ngase las pilas!, vayan y cojan unas arepas para azarlas, y cuidado que
     se les pueden quemar"
   typingtext: 0.05
 --- !u!1 &1331082354
@@ -25879,11 +25880,11 @@ MonoBehaviour:
   texto: {fileID: 1416526022}
   lineasDialogo:
   - "Eso es, ve! Esa arepita qued\xF3 una nota. Pero no se me duerman, que ya viene
-    gente con hambre"
+    gente con hambre despues de ayudar en la contrucci\xF3n"
   - "Cuando lleguen los vecinos, preparen sus pedidos y s\xEDrvanles la comida. Que
     aqu\xED nadie se nos quede con el est\xF3mago vac\xEDo"
   - Cojan un plato para servir esa arepa y llevensela al vecino
-  - Puedes usar las mesas para acomodar la arepa en el plato
+  - Puedes usar las mesas para acomodar la arepa en el plato plano
   typingtext: 0.02
 --- !u!1001 &1658295465
 PrefabInstance:
@@ -27249,10 +27250,10 @@ MonoBehaviour:
   viejito: {fileID: 1573793663}
   texto: {fileID: 1416526022}
   lineasDialogo:
-  - Construiste un bloque de cemento, ahora llevalo a la mesa para continuar con
-    la contruccion
-  - Y ya de ultimo ve a la mesa de madera y corta una madera para terminar la contruccion
-    por completo
+  - "Construiste un bloque de cemento, ahora llevalo a la mesa para continuar con
+    la contrucci\xF3n"
+  - "Y ya de ultimo ve a la mesa de madera y corta una madera para terminar la contrucci\xF3n
+    por completo"
   - Cuando termines ven y habla conmigo
   typingtext: 0.05
 --- !u!1 &1782476807
@@ -32452,7 +32453,7 @@ MonoBehaviour:
   - "Eso, carajo! \xBFVieron que s\xED eran capaces? De a poquitos se levanta una
     casa y, entre todos, se levanta un barrio"
   - "Bueno, muchachos, hasta aqu\xED llega mi explicaci\xF3n. Les deseo suerte en
-    las pr\xF3ximas hornadas\u2026 \xA1y no me vayan a dejar esa olla pegada!"
+    las pr\xF3ximas jornadas\u2026 \xA1y no me vayan a dejar esa olla pegada!"
   typingtext: 0.05
 --- !u!1001 &2106692185
 PrefabInstance:
